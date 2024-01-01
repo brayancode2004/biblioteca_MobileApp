@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>UamLibrary Mobile App</Text>
+      <Text>UamLibrary Mobile app</Text>
       <StatusBar style="auto" />
     </View>
   );
