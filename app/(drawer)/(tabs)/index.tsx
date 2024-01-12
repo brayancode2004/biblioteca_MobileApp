@@ -1,34 +1,54 @@
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import PromotionSlider from "../../../components/Home/PromotionSlider";
+import Header from "../../../components/Home/Header";
+import SearchBar from "../../../components/Home/SearchBar";
+import TopAutores from "../../../components/Home/TopAutores";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function Page() {
   return (
-    <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Uam Library</Text>
-        <Text style={styles.subtitle}>Aquí empieza la app.</Text>
-      </View>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+          <View style={styles.componentsContainer}>
+            <Header />
+            {/* Slider con imágenes Promocionales */}
+            <PromotionSlider />
+            {/* Slider Top Autores */}
+            <TopAutores />
+          </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    padding: 24,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 14,
   },
-  main: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: 64,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
+  componentsContainer: {
+    gap: 15
+  }
+ 
 });
+
+const carouselData = [
+  {
+    id: "01",
+    name: 'Slider 1',
+    image: 'https://firebasestorage.googleapis.com/v0/b/uamlibrary-b1bf8.appspot.com/o/Captura%20de%20pantalla%202024-01-05%20a%20la(s)%2011.54.51%E2%80%AFp.%C2%A0m..png?alt=media&token=f2432433-530e-4a12-becc-c94760c26bf9'
+  },
+  {
+    id: "02",
+    name: 'Slider 2',
+    image: 'https://firebasestorage.googleapis.com/v0/b/uamlibrary-b1bf8.appspot.com/o/Captura%20de%20pantalla%202024-01-05%20a%20la(s)%2011.54.51%E2%80%AFp.%C2%A0m..png?alt=media&token=f2432433-530e-4a12-becc-c94760c26bf9'
+  },
+  {
+    id: "03",
+    name: 'Slider 3',
+    image: 'https://firebasestorage.googleapis.com/v0/b/uamlibrary-b1bf8.appspot.com/o/Captura%20de%20pantalla%202024-01-05%20a%20la(s)%2011.54.51%E2%80%AFp.%C2%A0m..png?alt=media&token=f2432433-530e-4a12-becc-c94760c26bf9'
+  },
+]
