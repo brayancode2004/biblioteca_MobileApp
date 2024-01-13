@@ -1,7 +1,8 @@
 import axios from "axios";
+import { REACT_NATIVE_APP_API_URL } from '@env';
 
 
-const API_URL = `${process.env.REACT_NATIVE_APP_API_URL}/calificaciones`;
+const API_URL = `${REACT_NATIVE_APP_API_URL}/calificaciones`;
 
 // Suponiendo que tu archivo se llama "LibrosService.js" o algo similar
 

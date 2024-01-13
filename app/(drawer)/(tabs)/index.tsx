@@ -1,22 +1,59 @@
-import React from "react";
-import { StyleSheet, Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet,View, Switch } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PromotionSlider from "../../../components/Home/PromotionSlider";
 import Header from "../../../components/Home/Header";
-import SearchBar from "../../../components/Home/SearchBar";
+import SearchBar from "../../../components/Descubrir/SearchBar";
 import TopAutores from "../../../components/Home/TopAutores";
 import { ScrollView } from "react-native-gesture-handler";
+import BooksSlider from "../../../components/Home/BooksSlider";
 
 export default function Page() {
+  const [category1, setCategory1] = useState(true)
+
+  const toggleSwitch = () => {
+    setCategory1(previousState => !previousState);
+  };
+
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.componentsContainer}>
             <Header />
             {/* Slider con imágenes Promocionales */}
             <PromotionSlider />
             {/* Slider Top Autores */}
             <TopAutores />
+            <View style={styles.slidersContainer}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={category1 ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={category1}
+              />
+              {
+                category1 === true ? (
+                  <>
+                  <BooksSlider category1={'Literatura'} category2={"Adolescente"}/>
+                  <BooksSlider category1={'Literatura'} category2={"Ficción"}/>
+                  <BooksSlider category1={'Literatura'} category2={"Thriller"}/>
+                  <BooksSlider category1={'Literatura'} category2={"Biografía"}/>
+                  <BooksSlider category1={'Literatura'} category2={"Poesía"}/>
+                  </>
+                ):(
+                  <>
+                    <BooksSlider category1={'Académico'} category2={"Medicina"}/>
+                    <BooksSlider category1={'Académico'} category2={"Ingeniería"}/>
+                    <BooksSlider category1={'Académico'} category2={"Derecho"}/>
+                    <BooksSlider category1={'Académico'} category2={"Marketing"}/>
+                    <BooksSlider category1={'Académico'} category2={"Arquitectura"}/>
+                  </>
+                )
+              }
+
+            </View>
           </View>
       </ScrollView>
     </SafeAreaView>
@@ -31,6 +68,9 @@ const styles = StyleSheet.create({
   },
   componentsContainer: {
     gap: 15
+  },
+  slidersContainer: {
+    gap: 28
   }
  
 });

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import SearchBar from '../../../components/Home/SearchBar';
+import SearchBar from '../../../components/Descubrir/SearchBar';
 
 function DescubrirScreen() {
   return (

@@ -1,7 +1,8 @@
 import axios from "axios";
+import { REACT_NATIVE_APP_API_URL } from '@env';
 
 
-const API_URL = `${process.env.REACT_NATIVE_APP_API_URL}/estudiante`;
+const API_URL = `${REACT_NATIVE_APP_API_URL}/estudiante`;
 
 export const obtenerEstudiantes = () => {
     return axios.get(`${API_URL}/all`);
