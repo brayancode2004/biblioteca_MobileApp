@@ -13,7 +13,7 @@ function CustomDrawerContent(props: any) {
     <View style={{flex: 1}} >
       <DrawerContentScrollView {...props} 
         scrollEnabled={false}
-        contentContainerStyle={{ backgroundColor: '#dde3fe'}}
+        contentContainerStyle={{ backgroundColor: '#F9410B'}}
       >
         <View style={{ padding: 20}}>
           <Image
@@ -32,7 +32,7 @@ function CustomDrawerContent(props: any) {
       <View style={[styles.drawerFooterContainer, {paddingBottom: 20 + bottom}]} >
           <DrawerItem 
             label={'Cerrar Sesión'} 
-            inactiveTintColor="#5363df"
+            inactiveTintColor="#F9410B"
             onPress={() => setLogin(!login)} 
             icon={({size,color}) => (
               <Ionicons name="logout" size={size} color={color}/>
@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
   },
   userName: {
     alignSelf: 'center',
-    fontWeight: '500',
+    fontWeight: '800',
     fontSize: 18,
     paddingTop: 10,
-    color: '#5363df'
+    color: 'white',
   },
   drawerItemListContainer: {
     backgroundColor: '#fff',

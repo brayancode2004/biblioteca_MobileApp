@@ -9,7 +9,7 @@ function TabsLayout () {
       <Tabs
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: '#FF6B3C',
+          tabBarActiveTintColor: '#F9410B',
           tabBarStyle:{
             backgroundColor:'white', 
             position:'absolute', 

@@ -3,22 +3,17 @@ import { StyleSheet,View, Switch } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PromotionSlider from "../../../components/Home/PromotionSlider";
 import Header from "../../../components/Home/Header";
-import SearchBar from "../../../components/Descubrir/SearchBar";
 import TopAutores from "../../../components/Home/TopAutores";
 import { ScrollView } from "react-native-gesture-handler";
 import BooksSlider from "../../../components/Home/BooksSlider";
+import ToggleSwitch from "../../../components/Home/CategorySwitch";
 
 export default function Page() {
-  const [category1, setCategory1] = useState(true)
-
-  const toggleSwitch = () => {
-    setCategory1(previousState => !previousState);
-  };
-
+  const [category1, setCategory1] = useState(true);
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ marginBottom: 60}}>
           <View style={styles.componentsContainer}>
             <Header />
             {/* Slider con imágenes Promocionales */}
@@ -26,32 +21,28 @@ export default function Page() {
             {/* Slider Top Autores */}
             <TopAutores />
             <View style={styles.slidersContainer}>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={category1 ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={category1}
-              />
-              {
-                category1 === true ? (
-                  <>
-                  <BooksSlider category1={'Literatura'} category2={"Adolescente"}/>
-                  <BooksSlider category1={'Literatura'} category2={"Ficción"}/>
-                  <BooksSlider category1={'Literatura'} category2={"Thriller"}/>
-                  <BooksSlider category1={'Literatura'} category2={"Biografía"}/>
-                  <BooksSlider category1={'Literatura'} category2={"Poesía"}/>
-                  </>
-                ):(
-                  <>
-                    <BooksSlider category1={'Académico'} category2={"Medicina"}/>
-                    <BooksSlider category1={'Académico'} category2={"Ingeniería"}/>
-                    <BooksSlider category1={'Académico'} category2={"Derecho"}/>
-                    <BooksSlider category1={'Académico'} category2={"Marketing"}/>
-                    <BooksSlider category1={'Académico'} category2={"Arquitectura"}/>
-                  </>
-                )
-              }
+              <ToggleSwitch isAcademic={category1} setIsAcademic={setCategory1}/>
+              <View style={styles.categoriesContainer}>
+                {
+                  category1 === true ? (
+                    <>
+                    <BooksSlider category1={'Literatura'} category2={"Adolescente"}/>
+                    <BooksSlider category1={'Literatura'} category2={"Ficción"}/>
+                    <BooksSlider category1={'Literatura'} category2={"Thriller"}/>
+                    <BooksSlider category1={'Literatura'} category2={"Biografía"}/>
+                    <BooksSlider category1={'Literatura'} category2={"Poesía"}/>
+                    </>
+                  ):(
+                    <>
+                      <BooksSlider category1={'Académico'} category2={"Medicina"}/>
+                      <BooksSlider category1={'Académico'} category2={"Ingeniería"}/>
+                      <BooksSlider category1={'Académico'} category2={"Derecho"}/>
+                      <BooksSlider category1={'Académico'} category2={"Marketing"}/>
+                      <BooksSlider category1={'Académico'} category2={"Arquitectura"}/>
+                    </>
+                  )
+                }
+              </View>
 
             </View>
           </View>
@@ -64,12 +55,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 14,
+    paddingHorizontal: 17,
   },
   componentsContainer: {
     gap: 15
   },
   slidersContainer: {
+    gap: 18,
+    marginTop: 20
+  },
+  categoriesContainer:{
     gap: 28
   }
  

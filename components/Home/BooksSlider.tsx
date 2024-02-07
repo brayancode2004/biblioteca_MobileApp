@@ -41,7 +41,7 @@ export default BooksSlider;
 
 const styles = StyleSheet.create({
   container: {
-    gap: 11
+    gap: 11,
   },
   title: {
     fontWeight: '600',

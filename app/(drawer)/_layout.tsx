@@ -11,7 +11,7 @@ function DrawerLayout() {
       screenOptions={{ 
         headerShown: false,
         drawerHideStatusBarOnOpen: true,
-        drawerActiveBackgroundColor: '#5363df',
+        drawerActiveBackgroundColor: '#F9410B',
         drawerActiveTintColor: '#fff',
         drawerLabelStyle: { marginLeft: -20},
       }}

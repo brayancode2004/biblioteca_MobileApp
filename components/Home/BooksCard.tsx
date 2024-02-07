@@ -1,50 +1,14 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { acortarTexto, renderStarRating } from '../../utils/Functions';
-// Autor.ts
-interface Autor {
-  idAutor: number;
-  nombreAutor: string;
-  descripcion: string;
-  numLibros: number;
-  autorPic: string;
-  estado: boolean;
-}
+import { Image } from 'expo-image';
+import { router } from 'expo-router';
+import { book } from '../../types';
 
-// Categoria.ts
-interface Categoria {
-  idCategoria: number;
-  nombreCategoria: string;
-}
-
-// Ubicacion.ts
-interface Ubicacion {
-  idUbicacion: number;
-  numEstante: number;
-  numRepisa: number;
-}
-
-interface Libro {
-  idLibro: number;
-  titulo: string;
-  sinopsis: string;
-  imagen: string;
-  isbn: string;
-  numCopiasTotales: number;
-  numCopiasDisponibles: number;
-  añoPublicacion: number;
-  calificacionPromedio: number;
-  numCalificaciones: number;
-  estado: boolean;
-  ubicacion: Ubicacion;
-  autores: Autor[];
-  categorias: Categoria[];
-}
-
-function BooksCard({ item, index }: { item: Libro; index: number }) {
+function BooksCard({ item, index }: { item: book; index: number }) {
   return (
-    <View style={styles.container}>
-      <Image source={{uri: item.imagen}} style={styles.imagen}/>
+    <Pressable style={styles.container} onPress={() => router.push(`bookDetails/${item.idLibro}`)}>
+      <Image source={{uri: item.imagen}} style={styles.imagen} transition={650} contentFit='fill'/>
       <View style={styles.bookInfo}>
       <Text style={styles.title}>{acortarTexto(item.titulo, 14) }</Text>
       <Text style={styles.author}>{acortarTexto(item.autores[0].nombreAutor, 12) }</Text>
@@ -54,7 +18,7 @@ function BooksCard({ item, index }: { item: Libro; index: number }) {
         }
       </View>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
