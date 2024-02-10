@@ -2,53 +2,14 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-nati
 import { useLocalSearchParams } from 'expo-router';
 import { obtenerLibroPorId } from '../../services/LibrosService';
 import React, {useState, useEffect} from 'react';
-import { Image } from 'expo-image';
 import BookInfoSection from '../../components/BookDetails/BookInfoSection';
 import BookMenuSection from '../../components/BookDetails/BookMenuSection/BookMenuSection';
 import BottonTabs from '../../components/BookDetails/BottonTabs';
+import { book } from '../../types';
 
-// Autor.ts
-interface Autor {
-  idAutor: number;
-  nombreAutor: string;
-  descripcion: string;
-  numLibros: number;
-  autorPic: string;
-  estado: boolean;
-}
-
-// Categoria.ts
-interface Categoria {
-  idCategoria: number;
-  nombreCategoria: string;
-}
-
-// Ubicacion.ts
-interface Ubicacion {
-  idUbicacion: number;
-  numEstante: number;
-  numRepisa: number;
-}
-
-interface Libro {
-  idLibro: number;
-  titulo: string;
-  sinopsis: string;
-  imagen: string;
-  isbn: string;
-  numCopiasTotales: number;
-  numCopiasDisponibles: number;
-  añoPublicacion: number;
-  calificacionPromedio: number;
-  numCalificaciones: number;
-  estado: boolean;
-  ubicacion: Ubicacion;
-  autores: Autor[];
-  categorias: Categoria[];
-}
 
 function BookDetails() {
-  const [libro, setLibro] = useState<Libro | null>(null);
+  const [libro, setLibro] = useState<book | null>(null);
   const [loading, setLoading] = useState(true);
   const { id } = useLocalSearchParams();
 

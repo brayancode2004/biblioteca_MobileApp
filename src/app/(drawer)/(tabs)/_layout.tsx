@@ -29,7 +29,7 @@ function TabsLayout () {
     >
       
     <Tabs.Screen 
-        name="index" 
+        name="homeScreen" 
         options={{ 
             title: "Home",
             tabBarIcon: ({ size, color}) => (

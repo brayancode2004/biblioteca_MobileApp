@@ -13,15 +13,15 @@ const PromotionSlider: React.FC = () => {
   const carouselData: CarouselItem[] = [
     {
       id: "01",
-      image: require('../../assets/slider_1.jpg'),
+      image: require('../../../assets/slider_1.jpg'),
     },
     {
       id: "02",
-      image: require('../../assets/slider_2.jpg'),
+      image: require('../../../assets/slider_2.jpg'),
     },
     {
       id: "03",
-      image: require('../../assets/slider_3.jpg'),
+      image: require('../../../assets/slider_3.jpg'),
     },
   ];
 

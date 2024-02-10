@@ -31,7 +31,7 @@ function CustomDrawerContent(props: any) {
 
       <View style={[styles.drawerFooterContainer, {paddingBottom: 20 + bottom}]} >
           <DrawerItem 
-            label={'Cerrar Sesión'} 
+            label={'Cerrar Sesión'}
             inactiveTintColor="#F9410B"
             onPress={() => setLogin(!login)} 
             icon={({size,color}) => (

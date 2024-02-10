@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   imagen: {
-    height: '69%',
+    height: '70%',
     width: '42.4%',
     borderRadius: 15,
   },

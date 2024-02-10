@@ -8,7 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import BooksSlider from "../../../components/Home/BooksSlider";
 import ToggleSwitch from "../../../components/Home/CategorySwitch";
 
-export default function Page() {
+export default function HomeScreen() {
   const [category1, setCategory1] = useState(true);
 
   return (
