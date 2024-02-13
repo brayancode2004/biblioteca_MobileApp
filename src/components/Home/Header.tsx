@@ -3,9 +3,12 @@ import { useNavigation } from "expo-router";
 import { DrawerActions} from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React from 'react'
+import { cortarStringEnPrimerEspacio } from '../../utils/Functions';
+import { useAuth } from '../../providers/AuthProvider';
 
 function Header() {
     const navigation = useNavigation();
+    const { session } = useAuth();
   
     const onOpenDrawer = () => {
       navigation.dispatch(DrawerActions.openDrawer());
@@ -17,11 +20,11 @@ function Header() {
     <View style={styles.header}>
     <Pressable style={styles.user} onPress={onOpenDrawer}>
       <Image
-        source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/uamlibrary-b1bf8.appspot.com/o/IMG_3753.JPG?alt=media&token=4333c6e7-211a-41e0-abd4-7bb8d5d09e35'}}
+        source={{ uri: session?.userPic}}
         style={styles.userPic} 
       />
       <View>
-        <Text style={styles.greetings}>Hola, Brayan 👋!</Text>
+        <Text style={styles.greetings}>Hola, {cortarStringEnPrimerEspacio(session?.nombreCompleto)  } 👋!</Text>
         <Text style={styles.phrase}>Vamos a empezar a leer</Text>
       </View>
     </Pressable>

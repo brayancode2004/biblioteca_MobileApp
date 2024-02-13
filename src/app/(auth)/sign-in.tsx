@@ -1,19 +1,64 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, SafeAreaView } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert } from 'react-native';
+import { Image } from 'expo-image';
+import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, router } from 'expo-router';
 import Colors from '../../constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
-import { Image } from 'expo-image';
+import { loginEstudiante } from '../../services/EstudianteService';
+import { loginPersonalBibliotecario } from '../../services/PersonalBibliotecarioService';
+import { esCorreoValido, guardarUsuario } from '../../utils/Functions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '../../providers/AuthProvider';
+import { user } from '../../types';
 
 function SignInScreen() {
+  const { setSession } = useAuth()
   const navigation = useNavigation();
+  const [cif, setCif] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const onSignIn = async () => {
+    setLoading(true)
+    if(!esCorreoValido(cif)){
+      try{
+        const credencialesAEnviar = { cif: cif, password: password } 
+        const usuario = await loginEstudiante(credencialesAEnviar);
+        guardarUsuario(usuario)
+        setSession(usuario.data)
+        setLoading(false)
+        router.push('(usuario)/homeScreen')
+      }catch(e){
+        setLoading(false)
+        Alert.alert(e.response.data)
+      }
+    }else{
+        try{
+          const credencialesAEnviar2 = { correoInstitucional: cif, password: password };
+          const usuario = await loginPersonalBibliotecario(credencialesAEnviar2);
+          guardarUsuario(usuario)
+          setSession(usuario.data)
+          setLoading(false)
+          router.push('(bibliotecario)/homeScreen')
+        }catch(e){
+          // Esto es lo que pasa si la contraseña es incorrecta
+        setLoading(false)
+        Alert.alert(e.response.data)
+
+        }
+    }
+  }
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior='padding'>
-      <ScrollView contentContainerStyle={styles.scrollViewContent} keyboardShouldPersistTaps='handled'>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent} 
+        keyboardShouldPersistTaps='handled'
+        showsVerticalScrollIndicator={false}  
+      >
         <SafeAreaView style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-            <Ionicons name='arrow-back-outline' size={24}/>
+            <Ionicons name='arrow-back-outline' size={24} />
           </TouchableOpacity>
         </SafeAreaView>
         <View style={styles.imageContainer}>
@@ -24,6 +69,8 @@ function SignInScreen() {
             <Text style={styles.formItemTitle}>Cif</Text>
             <TextInput
               placeholder='22010480'
+              value={cif}
+              onChangeText={setCif}
               style={styles.formTextInput}
             />
           </View>
@@ -32,11 +79,13 @@ function SignInScreen() {
             <TextInput
               secureTextEntry
               placeholder='Ingresa tu contraseña'
+              value={password}
+              onChangeText={setPassword}
               style={styles.formTextInput}
             />
           </View>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Iniciar Sesión</Text>
+          <TouchableOpacity disabled={loading} style={styles.button} onPress={onSignIn}>
+            <Text style={styles.buttonText}> {loading ? 'Iniciando Sesión...' : 'Iniciar Sesión'}  </Text>
           </TouchableOpacity>
           <View style={styles.signTextContainer}>
             <Text style={styles.signQuestion}>¿Aún no tienes una cuenta?</Text>
@@ -66,7 +115,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderTopRightRadius: 15,
-    borderBottomLeftRadius: 15
+    borderBottomLeftRadius: 15,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+      },
+      android: {
+        elevation: 11,
+      },
+    }),
   },
   imageContainer: {
     alignItems: 'center',
@@ -92,7 +152,8 @@ const styles = StyleSheet.create({
   },
   formItemTitle:{
     color: Colors.light.secondary,
-    marginLeft: 4
+    marginLeft: 4,
+    fontWeight: '600'
   },
   formTextInput: {
     backgroundColor: Colors.light.clearGray,
@@ -109,7 +170,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: Colors.light.pureWhite,
-    fontWeight: '600',
+    fontWeight: '700',
     fontSize: 16
   },
   signTextContainer: {

@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 8,
         marginVertical: 10,
         borderRadius: 28,
-        elevation: 5, // Sombras en Android
+        elevation: 8, // Sombras en Android
         shadowColor: '#000', // Sombras en iOS
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.4,

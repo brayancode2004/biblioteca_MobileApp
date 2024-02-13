@@ -3,9 +3,26 @@ import { StyleSheet, View, Text, Pressable,} from 'react-native'; // Import Scro
 import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import Colors from '../constants/Colors';
-import { router } from 'expo-router';
+import { useRootNavigationState, router, Redirect } from 'expo-router';
+import { useAuth } from '../providers/AuthProvider';
 
 function Index() {
+  const { session } = useAuth();
+  const rootNavigationState = useRootNavigationState();
+
+  if (!rootNavigationState?.key) return null;
+  
+
+  if(session && session.role == 'user'){
+    return <Redirect href={'(usuario)/homeScreen'}/>
+  }
+
+  if(session && session.role == 'biblioteca'){
+    return <Redirect href={'(bibliotecario)/homeScreen'}/>
+  }
+
+
+
   return (
     <View style={styles.container}>
       <Image source={require('../../assets/welcome2.jpg')} style={styles.image} />
@@ -86,7 +103,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
     color: 'white',
   },
   signTextContainer: {

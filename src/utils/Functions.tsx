@@ -1,4 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const acortarTexto = (texto: string, longitud: number): string => {
     if (texto.length > longitud) {
@@ -30,3 +31,49 @@ export const renderStarRating = (rating: number) => {
 
   return starArray;
 };
+
+export const esCorreoValido = (email: string) => {
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(String(email).toLowerCase());
+}
+
+// Guardar un usuario en Async Storage
+export const guardarUsuario = async (valor) => {
+  try {
+    const jsonValue = JSON.stringify(valor);
+    await AsyncStorage.setItem('@user', jsonValue);
+    console.log('Objeto guardado correctamente');
+  } catch (error) {
+    console.error('Error al guardar el objeto:', error);
+  }
+};
+
+// Obtener un usuario de Async Storage
+export const obtenerUsuario = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@user');
+    return jsonValue != null ? JSON.parse(jsonValue).data : null;
+  } catch (error) {
+    console.error('Error al obtener el objeto:', error);
+    return null;
+  }
+};
+
+// Función para eliminar los datos del usuario al cerrar sesión
+export const eliminarDatosUsuario = async () => {
+  try {
+    await AsyncStorage.removeItem('@user');
+    console.log('Datos de usuario eliminados correctamente al cerrar sesión');
+  } catch (error) {
+    console.error('Error al eliminar los datos del usuario:', error);
+  }
+};
+
+export function cortarStringEnPrimerEspacio(texto: string | undefined) {
+  const indiceEspacio = texto?.indexOf(' '); // Encuentra el índice del primer espacio
+  if (indiceEspacio !== -1) { // Si se encuentra un espacio
+    return texto?.substring(0, indiceEspacio); // Devuelve la parte del string antes del primer espacio
+  } else {
+    return texto; // Si no se encuentra ningún espacio, devuelve el string original
+  }
+}

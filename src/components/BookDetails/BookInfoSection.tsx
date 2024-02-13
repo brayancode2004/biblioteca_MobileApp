@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { acortarTexto } from '../../utils/Functions';
 import { book } from '../../types';
+import Colors from '../../constants/Colors';
 
 function BookInfoSection({ book } : {book : book}) {
  const navigation = useNavigation()
@@ -73,10 +74,10 @@ const styles = StyleSheet.create({
     height: '70%',
     width: '42.4%',
     borderRadius: 15,
+    elevation: 11
   },
   imagenContainer: {
     alignItems: 'center', 
-    elevation: 5, 
     shadowColor: '#000', // Sombras en iOS
     shadowOffset: { width: -1, height: 11 },
     shadowOpacity: 0.26,

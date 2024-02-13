@@ -1,13 +1,24 @@
-import { View, Text, Image, Pressable, StyleSheet} from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity} from "react-native";
 import { DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Ionicons from '@expo/vector-icons/SimpleLineIcons';
+import Colors from "../constants/Colors";
+import { Redirect, router } from "expo-router";
+import { eliminarDatosUsuario } from "../utils/Functions";
+import { useAuth } from "../providers/AuthProvider";
 
 
 function CustomDrawerContent(props: any) {
-  const [login, setLogin] = useState(true);
   const { top, bottom }  = useSafeAreaInsets();
+  const { session, setSession } = useAuth();
+
+
+  const onLogOut = () => {
+    eliminarDatosUsuario();
+    setSession(null)
+    router.replace('/')
+  }
   
   return (
     <View style={{flex: 1}} >
@@ -17,11 +28,11 @@ function CustomDrawerContent(props: any) {
       >
         <View style={{ padding: 20}}>
           <Image
-            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/uamlibrary-b1bf8.appspot.com/o/IMG_3753.JPG?alt=media&token=4333c6e7-211a-41e0-abd4-7bb8d5d09e35'}}
+            source={{ uri: session?.userPic}}
             style={styles.userPic}
           />
           <Text style={styles.userName}>
-            Brayan Calderón
+            {session?.nombreCompleto}
           </Text>
         </View>
         <View style={styles.drawerItemListContainer}>
@@ -30,15 +41,12 @@ function CustomDrawerContent(props: any) {
       </DrawerContentScrollView>
 
       <View style={[styles.drawerFooterContainer, {paddingBottom: 20 + bottom}]} >
-          <DrawerItem 
-            label={'Cerrar Sesión'}
-            inactiveTintColor="#F9410B"
-            onPress={() => setLogin(!login)} 
-            icon={({size,color}) => (
-              <Ionicons name="logout" size={size} color={color}/>
-            )}
-          />
+        <TouchableOpacity onPress={onLogOut} style={styles.drawerFooterTouchable} >
+          <Ionicons name="logout" size={24} color={'#F9410B'}/>
+          <Text style={styles.drawerFooterLabel}>Cerrar Sesión</Text>
+        </TouchableOpacity>
       </View>
+
     </View>
   )
 }
@@ -56,6 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingTop: 10,
     color: 'white',
+    textAlign: 'center'
   },
   drawerItemListContainer: {
     backgroundColor: '#fff',
@@ -65,9 +74,15 @@ const styles = StyleSheet.create({
     borderTopColor: '#dde3fe',
     borderTopWidth: 1,
     padding: 20,
+  },
+  drawerFooterTouchable: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 17,
+  },
+  drawerFooterLabel: {
+    fontWeight: '600',
+    color: Colors.light.primary
   }
 });
 
