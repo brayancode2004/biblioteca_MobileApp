@@ -27,8 +27,14 @@ function SignInScreen() {
         const usuario = await loginEstudiante(credencialesAEnviar);
         guardarUsuario(usuario)
         setSession(usuario.data)
+        // Revisando si la app ya ha sido iniciada para mostrar o no la onboardinScreen
+        const firstLaunch = await AsyncStorage.getItem('@firstLaunch')
         setLoading(false)
-        router.push('(usuario)/homeScreen')
+        if(firstLaunch === null){
+          router.push('(auth)/onboardingScreen')
+        }else {
+          router.push('(usuario)/homeScreen')
+        }
       }catch(e){
         setLoading(false)
         Alert.alert(e.response.data)
@@ -39,8 +45,13 @@ function SignInScreen() {
           const usuario = await loginPersonalBibliotecario(credencialesAEnviar2);
           guardarUsuario(usuario)
           setSession(usuario.data)
+          const firstLaunch = await AsyncStorage.getItem('@firstLaunch')
           setLoading(false)
-          router.push('(bibliotecario)/homeScreen')
+          if(firstLaunch === null){
+            router.push('(auth)/onboardingScreen')
+          }else {
+            router.push('(bibliotecario)/homeScreen')
+          }
         }catch(e){
           // Esto es lo que pasa si la contraseña es incorrecta
         setLoading(false)

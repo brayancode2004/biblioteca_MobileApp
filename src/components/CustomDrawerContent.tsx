@@ -17,7 +17,7 @@ function CustomDrawerContent(props: any) {
   const onLogOut = () => {
     eliminarDatosUsuario();
     setSession(null)
-    router.replace('/')
+    router.push('/')
   }
   
   return (

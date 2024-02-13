@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { registerEstudiante } from '../../services/EstudianteService';
 import { useAuth } from '../../providers/AuthProvider';
 import { guardarUsuario } from '../../utils/Functions';
+import { AxiosError } from 'axios';
 
 function SignUpScreen() {
   const navigation = useNavigation()
@@ -27,7 +28,7 @@ function SignUpScreen() {
         guardarUsuario(usuario)
         setSession(usuario.data)
         setLoading(false)
-        router.push('(usuario)/homeScreen')
+        router.push('(auth)/onboardingScreen');
       }catch(e){
         setLoading(false)
         Alert.alert(e.response.data)

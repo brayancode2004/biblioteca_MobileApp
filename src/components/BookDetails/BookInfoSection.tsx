@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons, AntDesign } from '@expo/vector-icons'
-import { useNavigation } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { acortarTexto } from '../../utils/Functions';
@@ -31,7 +31,7 @@ function BookInfoSection({ book } : {book : book}) {
         {/* Header */}
         <SafeAreaView>
             <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+            <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
                 <Ionicons name='arrow-back-outline' size={24}/>
             </TouchableOpacity>
 

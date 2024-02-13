@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import Colors from '../constants/Colors';
 import { useRootNavigationState, router, Redirect } from 'expo-router';
 import { useAuth } from '../providers/AuthProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Index() {
   const { session } = useAuth();
@@ -21,6 +22,10 @@ function Index() {
     return <Redirect href={'(bibliotecario)/homeScreen'}/>
   }
 
+  // const borrar = async () => {
+  //   await AsyncStorage.removeItem('@firstLaunch');
+
+  // }
 
 
   return (
@@ -40,7 +45,7 @@ function Index() {
         <Pressable style={styles.button} 
         onPress={() => router.push('(auth)/sign-up')}
         >
-          <Text style={styles.buttonText}>{`¡Comienza Ahora!`}</Text>
+          <Text style={styles.buttonText}>¡Comienza Ahora!</Text>
         </Pressable>
         <View style={styles.signTextContainer}>
           <Text style={styles.signQuestion}>¿Ya tienes una cuenta?</Text>
