@@ -2,7 +2,7 @@ import axios from "axios";
 import { REACT_NATIVE_APP_API_URL } from '@env';
 
 
-const API_URL = `http://192.168.1.232:8181/api/estudiante`;
+const API_URL = `${REACT_NATIVE_APP_API_URL}/estudiante`;
 
 export const obtenerEstudiantes = () => {
     return axios.get(`${API_URL}/all`);

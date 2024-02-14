@@ -68,6 +68,19 @@
     role: string;
     estado: boolean;
   }
+
+  export interface prestamo {
+    idPrestamo: number;
+    estudiante: user;
+    libro: book;
+    fechaPrestamo: string; // Representa una fecha en formato ISO string
+    fechaDevolucion: string; // Representa una fecha en formato ISO string o null si aún no se ha devuelto
+    estado: string;
+    codigoRetiro: string;
+    numRenovaciones: number;
+    personalEntrega: bibliotecaria;
+    personalRecepcion: bibliotecaria;
+  }
   
 
 

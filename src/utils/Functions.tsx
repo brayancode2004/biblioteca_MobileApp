@@ -77,3 +77,23 @@ export function cortarStringEnPrimerEspacio(texto: string | undefined) {
     return texto; // Si no se encuentra ningún espacio, devuelve el string original
   }
 }
+
+export function formatearFecha(fecha : string) {
+  const partes = fecha.split("-");
+  return `${partes[2]}/${partes[1]}/${partes[0]}`;
+}
+
+export function getColorPorEstado(estado : string) {
+  switch (estado) {
+    case 'multado':
+      return '#d33';
+    case 'en ejecución':
+      return '#0B545B';
+    case 'finalizado':
+      return '#C1C1C1';
+    case 'aprobado':
+      return 'green';
+    default:
+      return 'inherit'; // o cualquier color por defecto
+  }
+}
