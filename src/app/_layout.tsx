@@ -69,6 +69,7 @@ function RootLayout() {
                 options={{ headerShown: false}} 
               />
               <Stack.Screen name="(auth)" />
+              <Stack.Screen name="(qrCodes)" options={{ presentation: 'fullScreenModal'}}/>
           </Stack>
         </Animated.View>
       </GestureHandlerRootView>

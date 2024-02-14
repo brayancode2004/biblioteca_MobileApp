@@ -10,7 +10,6 @@ import { loginPersonalBibliotecario } from '../../services/PersonalBibliotecario
 import { esCorreoValido, guardarUsuario } from '../../utils/Functions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../../providers/AuthProvider';
-import { user } from '../../types';
 
 function SignInScreen() {
   const { setSession } = useAuth()

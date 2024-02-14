@@ -5,6 +5,7 @@ import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { prestamo } from '../../types';
 import Colors from '../../constants/Colors';
 import { formatearFecha, getColorPorEstado } from '../../utils/Functions';
+import { router } from 'expo-router';
 
 function PrestamoItem({ prestamo }: {prestamo: prestamo}) {
     return (
@@ -31,13 +32,12 @@ function PrestamoItem({ prestamo }: {prestamo: prestamo}) {
           </View>
           <View style={styles.quantitySelector}>
             <MaterialCommunityIcons
-            //   onPress={() => updateQuantity(cartItem.id, -1)}
+              onPress={() => router.push({ params: { codigoRetiro: prestamo.codigoRetiro}, pathname: '(qrCodes)/showQrcodeScreen' })}
               size={35}
               name="qrcode-scan"
               color={Colors.light.primary}
               style={{ padding: 5 }}
             />
-
             <TouchableOpacity style={styles.renovartBtn}>
                 <Text style={styles.renovarText}>Renovar</Text>
             </TouchableOpacity>
