@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../../providers/AuthProvider';
 
 function SignInScreen() {
-  const { setSession } = useAuth()
+  const { setSession, session} = useAuth()
   const navigation = useNavigation();
   const [cif, setCif] = useState('');
   const [password, setPassword] = useState('');

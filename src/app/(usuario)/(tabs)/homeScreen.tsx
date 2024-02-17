@@ -7,9 +7,12 @@ import TopAutores from "../../../components/Home/TopAutores";
 import { ScrollView } from "react-native-gesture-handler";
 import BooksSlider from "../../../components/Home/BooksSlider";
 import ToggleSwitch from "../../../components/Home/CategorySwitch";
+import { useAuth } from "../../../providers/AuthProvider";
 
 export default function HomeScreen() {
+  const { setSession, session} = useAuth()
   const [category1, setCategory1] = useState(true);
+  // console.warn(session)
 
   return (
     <SafeAreaView style={styles.container}>

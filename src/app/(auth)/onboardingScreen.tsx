@@ -1,6 +1,6 @@
 import { Link, Stack, router } from 'expo-router';
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, SafeAreaView, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import {
@@ -8,7 +8,7 @@ import {
   Gesture,
   Directions,
 } from 'react-native-gesture-handler';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, {
   FadeIn,
   FadeOut,

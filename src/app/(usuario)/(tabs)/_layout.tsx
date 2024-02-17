@@ -52,7 +52,8 @@ function TabsLayout () {
             title: "Mis Préstamos",
             tabBarIcon: ({ size, color}) => (
               <Ionicons name='library' size={size} color={color}/>
-            )
+            ),
+            unmountOnBlur: true
         }}
     />
     <Tabs.Screen

@@ -11,12 +11,12 @@ import { book } from '../../types';
 function BookDetails() {
   const [libro, setLibro] = useState<book | null>(null);
   const [loading, setLoading] = useState(true);
-  const { id } = useLocalSearchParams();
+  const { idLibro } = useLocalSearchParams();
 
   useEffect(() => {
     const fetchLibrosData = async () => {
       try {
-        const response = await obtenerLibroPorId(id);
+        const response = await obtenerLibroPorId(idLibro);
         setLibro(response);
         setLoading(false);
       } catch (error) {
@@ -25,7 +25,7 @@ function BookDetails() {
     };
 
     fetchLibrosData();
-  }, [id]);
+  }, [idLibro]);
 
   if (loading) {
     return <ActivityIndicator />;
@@ -36,7 +36,7 @@ function BookDetails() {
       <View style={styles.root}>
         {/* Book CoverSection */}
         <View style={styles.infoSectionContainer}>
-          <BookInfoSection book={libro}/>
+          <BookInfoSection book={libro} prestamo={false}/>
         </View>
 
         {/* Description */}
@@ -46,7 +46,7 @@ function BookDetails() {
 
         {/* Buttons */}
         <View style={styles.buttonsContainer}>
-          <BottonTabs/>
+          <BottonTabs idLibro={libro.idLibro} prestamo={false}/>
         </View>
       </View>
     );
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
     
   },
   buttonsContainer: {
-    height: 135,
+    height: 100,
   },
 });

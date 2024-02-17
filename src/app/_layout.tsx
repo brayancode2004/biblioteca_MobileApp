@@ -61,11 +61,11 @@ function RootLayout() {
   return (
       <GestureHandlerRootView style={{ flex: 1}}>
         <Animated.View style={{ flex: 1}} entering={FadeIn}>
-          <Stack screenOptions={{ headerShown: false}} initialRouteName="(auth)" >
+          <Stack screenOptions={{ headerShown: false}} >
               <Stack.Screen name="(usuario)" options={{ headerShown: false}}/>
               <Stack.Screen name="(bibliotecario)" options={{ headerShown: false}}/>
               <Stack.Screen 
-                name="bookDetails/[id]" 
+                name="(bookDetails)" 
                 options={{ headerShown: false}} 
               />
               <Stack.Screen name="(auth)" />

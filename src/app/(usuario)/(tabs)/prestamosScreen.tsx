@@ -1,61 +1,68 @@
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
-import Colors from "../../../constants/Colors"
-import { FlatList } from "react-native-gesture-handler"
-import { obtenerPrestamosPorEstudiante } from "../../../services/PrestamosService"
-import { useEffect, useState } from "react"
-import { useAuth } from "../../../providers/AuthProvider"
-import PrestamoItem from "../../../components/MisPrestamos/PrestamoItem";
-import { prestamo } from "../../../types"
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, RefreshControl, StyleSheet } from 'react-native';
+import { obtenerPrestamosPorEstudiante } from '../../../services/PrestamosService';
+import { useAuth } from '../../../providers/AuthProvider';
+import PrestamoItem from '../../../components/MisPrestamos/PrestamoItem';
+import { prestamo } from '../../../types';
+import Colors from '../../../constants/Colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function PrestamosScreen() {
   const [prestamos, setPrestamos] = useState<prestamo[] | null>(null);
-  const { session } = useAuth();
   const [loading, setLoading] = useState(true);
+  const { session } = useAuth();
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    const fetchPrestamos = async () => {
-      if (session && 'cif' in session) {
+  const fetchPrestamos = async () => {
+    if (session && 'cif' in session) {
+      try {
         const prestamosResponse = await obtenerPrestamosPorEstudiante(session.cif);
         setPrestamos(prestamosResponse);
+      } catch (error) {
+        console.error("Error al obtener los préstamos:", error);
+      } finally {
         setLoading(false);
+        setRefreshing(false); // Detener el indicador de refreshing
       }
-    };
+    } else {
+      setLoading(false);
+      setRefreshing(false); // Detener el indicador de refreshing
+    }
+  };
+
+  useEffect(() => {
     fetchPrestamos();
   }, [session]);
-  
-  
+
+  const onRefresh = () => {
+    setRefreshing(true); // Iniciar el indicador de refreshing
+    fetchPrestamos(); // Volver a cargar los datos
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Mis Préstamos</Text>
-        {
-          loading ? (
-            <ActivityIndicator/>
-          ) :
-          (
-            prestamos?.length ?? 0 > 0 ? (
-                <FlatList 
-                data={prestamos}
-                renderItem={({ item, index }) => <PrestamoItem prestamo={item}/>}
-                style={styles.flatList}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.flatListContent}
-              />
-              ):(
-                <View style={[styles.flatList, {justifyContent: 'center', alignItems: 'center'}]}>
-                  <Text style={{fontSize: 40, fontWeight: '700', color:Colors.light.gray}}>¡Aún no has prestado ningún libro🤡🤡!</Text>
-                </View>
-              )
-          )
-           
+      <Text style={styles.title}>Mis Préstamos</Text>
+      <FlatList
+        data={prestamos}
+        renderItem={({ item, index }) => <PrestamoItem prestamo={item} />}
+        keyExtractor={(item, index) => index.toString()}
+        style={styles.flatList}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.flatListContent}
+        refreshControl={ // Agregar el RefreshControl a la FlatList
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={[Colors.light.primary]} // Color del indicador de refreshing en Android
+            tintColor={Colors.light.primary} // Color del indicador de refreshing en iOS
+          />
         }
-        
-
+      />
     </SafeAreaView>
-  )
+  );
 }
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.light.primary,
@@ -78,6 +85,7 @@ const styles = StyleSheet.create({
     gap: 14,
     padding: 22,
   }
-})
+});
 
-export default PrestamosScreen
+export default PrestamosScreen;
+

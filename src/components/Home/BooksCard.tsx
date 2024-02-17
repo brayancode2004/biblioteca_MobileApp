@@ -7,7 +7,7 @@ import { book } from '../../types';
 
 function BooksCard({ item, index }: { item: book; index: number }) {
   return (
-    <Pressable style={styles.container} onPress={() => router.push(`bookDetails/${item.idLibro}`)}>
+    <Pressable style={styles.container} onPress={() => router.push({ params: { idLibro: item.idLibro }, pathname: '(bookDetails)/id' })}>
       <Image source={{uri: item.imagen}} style={styles.imagen} transition={650} contentFit='fill'/>
       <View style={styles.bookInfo}>
       <Text style={styles.title}>{acortarTexto(item.titulo, 14) }</Text>

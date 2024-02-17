@@ -78,9 +78,9 @@ export function cortarStringEnPrimerEspacio(texto: string | undefined) {
   }
 }
 
-export function formatearFecha(fecha : string) {
-  const partes = fecha.split("-");
-  return `${partes[2]}/${partes[1]}/${partes[0]}`;
+export function formatearFecha(fecha : string ) {
+    const partes = fecha.split("-");
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
 
 export function getColorPorEstado(estado : string) {

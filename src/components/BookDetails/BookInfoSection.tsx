@@ -9,7 +9,7 @@ import { acortarTexto } from '../../utils/Functions';
 import { book } from '../../types';
 import Colors from '../../constants/Colors';
 
-function BookInfoSection({ book } : {book : book}) {
+function BookInfoSection({ book, prestamo } : {book : book, prestamo : boolean}) {
  const navigation = useNavigation()
 
  const renderAutores = () => {
@@ -36,11 +36,11 @@ function BookInfoSection({ book } : {book : book}) {
             </TouchableOpacity>
 
             <View style={styles.headerTitle}>
-                <Text style={styles.titleText}>Book Details</Text>
+                <Text style={styles.titleText}>{prestamo ? 'Confirmar Préstamo' :  'Book Details'}</Text>
             </View>
-
-            <TouchableOpacity style={styles.favoriteBtn}>
-                <AntDesign name='hearto' size={24}/>
+            
+            <TouchableOpacity style={prestamo ? {backgroundColor: 'transparent'} :  styles.favoriteBtn}>
+                <AntDesign name='hearto' size={24} color={prestamo ? 'transparent' : 'black'}/>
             </TouchableOpacity>
             </View>
         </SafeAreaView>
