@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, RefreshControl, StyleSheet } from 'react-native';
+import { View, Text, FlatList, RefreshControl, StyleSheet, ActivityIndicator } from 'react-native';
 import { obtenerPrestamosPorEstudiante } from '../../../services/PrestamosService';
 import { useAuth } from '../../../providers/AuthProvider';
 import PrestamoItem from '../../../components/MisPrestamos/PrestamoItem';
@@ -42,22 +42,37 @@ function PrestamosScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Mis Préstamos</Text>
-      <FlatList
-        data={prestamos}
-        renderItem={({ item, index }) => <PrestamoItem prestamo={item} />}
-        keyExtractor={(item, index) => index.toString()}
-        style={styles.flatList}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.flatListContent}
-        refreshControl={ // Agregar el RefreshControl a la FlatList
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            colors={[Colors.light.primary]} // Color del indicador de refreshing en Android
-            tintColor={Colors.light.primary} // Color del indicador de refreshing en iOS
-          />
-        }
-      />
+      {
+          loading ? (
+            <View style={[styles.flatList, { justifyContent: 'center', alignItems: 'center'}]}>
+              <ActivityIndicator/>
+            </View>
+          ) :
+          (
+            prestamos?.length ?? 0 > 0 ? (
+              <FlatList
+              data={prestamos}
+              renderItem={({ item, index }) => <PrestamoItem prestamo={item} />}
+              keyExtractor={(item, index) => index.toString()}
+              style={styles.flatList}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.flatListContent}
+              refreshControl={ // Agregar el RefreshControl a la FlatList
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                  colors={[Colors.light.primary]} // Color del indicador de refreshing en Android
+                  tintColor={Colors.light.primary} // Color del indicador de refreshing en iOS
+                />
+              }
+            />
+              ):(
+                <View style={[styles.flatList, {justifyContent: 'center', alignItems: 'center'}]}>
+                  <Text style={{fontSize: 40, fontWeight: '700', color:Colors.light.gray}}>¡Aún no has prestado ningún libro🤡🤡!</Text>
+                </View>
+              )
+          )
+      }
     </SafeAreaView>
   );
 }

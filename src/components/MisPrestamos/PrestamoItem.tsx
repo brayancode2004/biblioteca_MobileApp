@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Image } from 'expo-image';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -6,8 +6,30 @@ import { prestamo } from '../../types';
 import Colors from '../../constants/Colors';
 import { formatearFecha, getColorPorEstado } from '../../utils/Functions';
 import { router } from 'expo-router';
+import { renovarPrestamo } from '../../services/PrestamosService';
+import { useAuth } from '../../providers/AuthProvider';
 
 function PrestamoItem({ prestamo }: {prestamo: prestamo}) {
+  const { session } = useAuth();
+  const [renovando, setRenovando] = useState(false)
+  
+  const handleRenovar = async () => {
+    setRenovando(true)
+    try{
+      if(session && 'cif' in session){
+        const respuestaRenovacion = await renovarPrestamo(session.cif, prestamo.idPrestamo)
+        setRenovando(false)
+        router.push({params: {fechaDevolucion: respuestaRenovacion.fechaDevolucion},   pathname: '(misPrestamos)/renovarPrestamo'})
+      }
+    }catch(e : any){
+      const mensajeError = e.response && e.response.data && typeof e.response.data === 'string' 
+      ? e.response.data 
+      : 'No se pudo renovar tu préstamo debido a un error inesperado.';
+      setRenovando(false)
+      router.push({params: {error: mensajeError},  pathname: '(misPrestamos)/renovarPrestamo'})
+    }
+  }
+
     return (
         <View style={styles.container}>
           <Image
@@ -31,16 +53,31 @@ function PrestamoItem({ prestamo }: {prestamo: prestamo}) {
             </View>
           </View>
           <View style={styles.quantitySelector}>
-            <MaterialCommunityIcons
-              onPress={() => router.push({ params: { codigoRetiro: prestamo.codigoRetiro}, pathname: '(qrCodes)/showQrcodeScreen' })}
-              size={35}
-              name="qrcode-scan"
-              color={Colors.light.primary}
-              style={{ padding: 5 }}
-            />
-            <TouchableOpacity style={styles.renovartBtn}>
-                <Text style={styles.renovarText}>Renovar</Text>
-            </TouchableOpacity>
+            {
+              prestamo.estado !== 'finalizado' && prestamo.estado !== 'multado' && (
+                <MaterialCommunityIcons
+                  onPress={() => router.push({ params: { codigoRetiro: prestamo.codigoRetiro}, pathname: '(misPrestamos)/showQrcodeScreen' })}
+                  size={35}
+                  name="qrcode-scan"
+                  color={Colors.light.primary}
+                  style={{ padding: 5 }}
+                />
+              )
+            }
+            { prestamo.estado === 'en ejecución' && (
+                <TouchableOpacity style={styles.renovartBtn} onPress={handleRenovar} disabled={renovando}>
+                    <Text style={styles.renovarText}>{renovando ? 'Renovando...' : 'Renovar'}</Text>
+                </TouchableOpacity>
+              )
+            }
+            {
+              prestamo.estado === 'multado' && (
+                <TouchableOpacity style={[styles.renovartBtn, {backgroundColor: 'red'}]} onPress={handleRenovar} disabled={renovando}>
+                    <Text style={styles.renovarText}>Ver Multa</Text>
+                </TouchableOpacity>
+              )
+            }
+
     
           </View>
         </View>

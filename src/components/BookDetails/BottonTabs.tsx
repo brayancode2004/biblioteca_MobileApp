@@ -11,7 +11,6 @@ import Colors from '../../constants/Colors';
 function BottonTabs({ idLibro, prestamo } : {idLibro : number, prestamo : boolean }) {
   const { session } = useAuth()
   const [yaPrestado, setYaPrestado] = useState();
-  const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
   const verificandoPrestamo = async () => {
@@ -43,7 +42,6 @@ function BottonTabs({ idLibro, prestamo } : {idLibro : number, prestamo : boolea
         const mensajeError = e.response && e.response.data && typeof e.response.data === 'object' 
         ? e.response.data.message 
         : e.response.data;
-        setError(mensajeError)
         setLoading(false)
         router.push({ params: { error: mensajeError }, pathname: '(bookDetails)/bookPrestamoSuccess' });
       }
