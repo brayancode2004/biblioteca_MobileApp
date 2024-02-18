@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons, AntDesign } from '@expo/vector-icons'
@@ -10,7 +10,7 @@ import { book } from '../../types';
 import Colors from '../../constants/Colors';
 
 function BookInfoSection({ book, prestamo } : {book : book, prestamo : boolean}) {
- const navigation = useNavigation()
+
 
  const renderAutores = () => {
   if (book.autores && book.autores.length > 0) {
@@ -46,16 +46,19 @@ function BookInfoSection({ book, prestamo } : {book : book, prestamo : boolean})
         </SafeAreaView>
         <View style={styles.imagenContainer}>
             <Image source={{ uri: book.imagen}} style={styles.imagen} contentFit='fill'  />
-            <View style={{ marginTop: 22, alignItems: 'center'}}>
-              <Text style={styles.title}>{acortarTexto(book.titulo, 35)}</Text>
-              <Text style={styles.autor}>{acortarTexto(renderAutores(),31)}</Text>
-            </View>
+        </View>
+        <View style={styles.bookInfo}>
+          <Text style={styles.title}>{acortarTexto(book.titulo, 35)}</Text>
+          <Text style={styles.autor}>{acortarTexto(renderAutores(),31)}</Text>
         </View>
     </View>
   )
 }
 
 export default BookInfoSection;
+
+const windowWidth =  Dimensions.get('window').width
+const windowHeight =  Dimensions.get('window').height
 
 const styles = StyleSheet.create({
   container: {
@@ -71,17 +74,23 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   imagen: {
-    height: '70%',
-    width: '42.4%',
+    height: windowHeight > 850 ? '76%' : windowHeight > 800 ? '80%' : '81%',
+    width: windowWidth > 400 ? '46%': '41%',
     borderRadius: 15,
-    elevation: 11
+    elevation: 25
   },
   imagenContainer: {
     alignItems: 'center', 
     shadowColor: '#000', // Sombras en iOS
-    shadowOffset: { width: -1, height: 11 },
+    shadowOffset: { width: -1, height: 1 },
     shadowOpacity: 0.26,
     shadowRadius: 14,
+    elevation: 25,
+    marginTop: windowHeight > 850 ? 0 : windowHeight > 800 ? 14  : 5,
+  },
+  bookInfo: {
+    marginTop: windowHeight > 850 ? -55 : windowHeight > 800 ? -44  : -28,
+    alignItems: 'center'
   },
   header: {
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable,} from 'react-native'; // Import ScrollView
+import { StyleSheet, View, Text, Pressable, Dimensions,} from 'react-native'; // Import ScrollView
 import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import Colors from '../constants/Colors';
@@ -58,37 +58,41 @@ function Index() {
 
 export default Index;
 
+const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width
+
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: 'white',
     alignItems: 'center',
-    gap: 28,
+    gap: windowHeight > 850 ? 28 : windowHeight > 800 ? 14  : 8,
   },
   image: {
     width: '100%',
-    aspectRatio: 0.8
+    height: '62%'
   },
   textContainer: {
     paddingHorizontal: 26,
     alignItems: 'center',
-    gap: 28
+    gap: windowHeight > 850 ? 28 : 8,
   },
   titleContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 28
+    paddingHorizontal: windowHeight > 850 ? 28 : 4,
+    textAlign: 'center'
   },
   highlight: {
     color: Colors.light.primary,
     fontWeight: '600',
-    fontSize: 27,
+    fontSize: windowHeight > 800 ? 27 : 23,
     maxWidth: '80%',
     textAlign: 'center',
   },
   title: {
     color: Colors.light.secondary,
     fontWeight: '600',
-    fontSize: 27,
+    fontSize: windowHeight > 800 ? 27 : 23,
     maxWidth: '80%',
     textAlign: 'center',
   },

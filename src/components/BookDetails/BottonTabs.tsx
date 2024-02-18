@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import { Foundation } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -94,6 +94,9 @@ function BottonTabs({ idLibro, prestamo } : {idLibro : number, prestamo : boolea
 
 export default BottonTabs;
 
+const windowWidth =  Dimensions.get('window').width
+const windowHeight =  Dimensions.get('window').height
+
 const styles = StyleSheet.create({
   container: {
       position: 'absolute',
@@ -101,16 +104,15 @@ const styles = StyleSheet.create({
       bottom: 0,
       display: 'flex',
       flexDirection: 'row',
-      height: 100,
+      height:  windowHeight > 850 ? 100 : 80,
       width: '100%',
       justifyContent: 'center',
       borderTopRightRadius: 20,
       borderTopLeftRadius: 20,
       borderWidth: 1,
       borderColor: '#E5E5E5',
-      paddingBottom: 20,
-      paddingTop: 10,
-      paddingHorizontal: 11,
+      paddingBottom: windowHeight > 850 ? 20 : 10,
+      paddingTop: windowHeight > 850 ? 10 : 5,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: -4 },
       shadowOpacity: 0.10,
