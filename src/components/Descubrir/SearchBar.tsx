@@ -1,17 +1,20 @@
 import React, { useRef } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Colors from '../../constants/Colors';
 
-function SearchBar() {
+function SearchBar({ query, setQuery}) {
   return (
       <View style={styles.searchBarContainer}>
         <TextInput
           placeholder="Buscar un libro"
           placeholderTextColor={'gray'}
           style={styles.searchBarInput}
+          value={query}
+          onChangeText={setQuery}
         />
         <View style={styles.iconContainer}>
-          <Ionicons name="search-outline" size={22} />
+          <Ionicons name="search-outline" size={22} color={Colors.light.primary} />
         </View>
       </View>
   );
@@ -24,8 +27,8 @@ const styles = StyleSheet.create({
     // marginTop: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 999,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    borderRadius: 28,
+    backgroundColor: Colors.light.clearGray,
     padding: 6,
   },
   searchBarInput: {

@@ -38,7 +38,7 @@ function TabsLayout () {
         }}
     />
     <Tabs.Screen
-      name="descubrirScreen"
+      name="(descubrir)"
       options={{
         title: "Descubrir",
         tabBarIcon: ({ size, color }) => (

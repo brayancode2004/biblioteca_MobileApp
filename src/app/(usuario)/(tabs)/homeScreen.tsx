@@ -22,7 +22,7 @@ export default function HomeScreen() {
             {/* Slider con imágenes Promocionales */}
             <PromotionSlider />
             {/* Slider Top Autores */}
-            <TopAutores />
+            <TopAutores discover={false}/>
             <View style={styles.slidersContainer}>
               <ToggleSwitch isAcademic={category1} setIsAcademic={setCategory1}/>
               <View style={styles.categoriesContainer}>

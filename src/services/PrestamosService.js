@@ -73,3 +73,14 @@ export const obtenerTodosLosPrestamos = async () => {
     const response = await axios.get(`${API_URL}/todos`);
     return response.data;
 };
+
+export const obtenerTop10LibrosMasPrestados = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/top10LibrosMasPrestados`);
+        return response.data;
+    } catch (error) {
+        // Manejar el error aquí si es necesario
+        console.error("Error al obtener los top 10 libros más prestados:", error);
+        throw error; // Puedes relanzar el error para que el componente que llama a esta función lo maneje
+    }
+};

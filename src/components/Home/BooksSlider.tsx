@@ -26,7 +26,7 @@ function BooksSlider({category1, category2}: {category1: string, category2: stri
         <Text style={styles.title}>{category2}</Text>
         <FlatList
           data={books}
-          renderItem={({ item, index }) => <BooksCard item={item} index={index} />}
+          renderItem={({ item}) => <BooksCard item={item} top={false} />}
           // keyExtractor={(item) => item.idLibro.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}

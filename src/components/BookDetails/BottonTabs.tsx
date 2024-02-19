@@ -34,7 +34,7 @@ function BottonTabs({ idLibro, prestamo } : {idLibro : number, prestamo : boolea
       try{
         const prestamoResult = await solicitarPrestamo(session.cif, idLibro);
         setLoading(false)
-        router.push({ 
+        router.replace({ 
           params: { libroTitulo: prestamoResult.libro.titulo, fechaDevolucion: prestamoResult.fechaDevolucion}, 
           pathname: '(bookDetails)/bookPrestamoSuccess' 
         });

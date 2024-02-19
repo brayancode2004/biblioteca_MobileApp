@@ -5,10 +5,11 @@ import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { book } from '../../types';
 
-function BooksCard({ item, index }: { item: book; index: number }) {
+function BooksCard({ item, top }: { item: book, top: boolean }) {
   return (
-    <Pressable style={styles.container} onPress={() => router.push({ params: { idLibro: item.idLibro }, pathname: '(bookDetails)/id' })}>
-      <Image source={{uri: item.imagen}} style={styles.imagen} transition={650} contentFit='fill'/>
+  
+    <Pressable style={[styles.container, top && {marginHorizontal: 11 }]} onPress={() => router.push({ params: { idLibro: item.idLibro }, pathname: '(bookDetails)/id' })}>
+      <Image source={{uri: item.imagen}} style={top ? styles.imagenTop : styles.imagen} transition={650} contentFit='fill'/>
       <View style={styles.bookInfo}>
       <Text style={styles.title}>{acortarTexto(item.titulo, 14) }</Text>
       <Text style={styles.author}>{acortarTexto(item.autores[0].nombreAutor, 12) }</Text>
@@ -26,12 +27,18 @@ export default BooksCard;
 
 const styles = StyleSheet.create({
   container: {
-    gap: 2
+    gap: 2,
+    flex: 1
   },
   imagen: {
     width: 120,
     height: 170,
     borderRadius: 11
+  },
+  imagenTop: {
+    width: '100%',
+    aspectRatio: 1/1.4,
+    borderRadius: 14
   },
   bookInfo: {
     alignItems: 'center',

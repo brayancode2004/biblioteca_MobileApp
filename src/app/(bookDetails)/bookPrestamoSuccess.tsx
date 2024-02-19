@@ -15,6 +15,9 @@ const {error, libroTitulo, fechaDevolucion} = useLocalSearchParams()
     <View style={styles.container}>
         <Text>Ha habido un error</Text>
         <Text>{error}</Text>
+        <TouchableOpacity onPress={() => router.replace(('(usuario)/homeScreen'))} style={styles.btnBack}>
+            <Text style={styles.btnBackTitle}>Salir</Text>
+        </TouchableOpacity>
     </View>
   }else {
       return (

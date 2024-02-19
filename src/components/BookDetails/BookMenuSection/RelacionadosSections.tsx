@@ -29,7 +29,7 @@ function RelacionadosSections({ book } : { book: book }) {
         <Text style={styles.title}>También te podrían gustar:</Text>
         {
           books.map((book: book, index: number) => (
-            <Pressable key={book.idLibro} style={styles.bookItemContainer} onPress={() => router.push(`bookDetails/${book.idLibro}`)}>
+            <Pressable key={book.idLibro} style={styles.bookItemContainer} onPress={() => router.push({ params: { idLibro: book.idLibro }, pathname: '(bookDetails)/id' })}>
               <Image source={{ uri: book.imagen}} style={styles.bookImagen}/>
               <View style={styles.bookInfoSection}>
                 <Text style={styles.bookTitle}>{book.titulo}</Text>

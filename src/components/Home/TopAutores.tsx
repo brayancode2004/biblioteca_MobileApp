@@ -10,7 +10,7 @@ interface CarouselItem {
     name: string;
 }
 
-function TopAutores() {
+function TopAutores({ discover } : { discover : boolean }) {
   const renderItem = ({ item, index }: { item: CarouselItem; index: number }) => (
     <View style={styles.authorItem}>
         <Image source={{ uri: item.picture }} style={styles.authorImage} />
@@ -19,9 +19,9 @@ function TopAutores() {
     );
 
   return (
-    <View style={styles.container}> 
+    <View style={[styles.container, discover && {paddingHorizontal: 11, marginTop: 11}]}> 
         <View style={styles.titleContainer}>
-            <Text style={styles.title}>Top 10 Autores</Text>
+            <Text style={discover ? styles.discoverScreenTitle : styles.title}>Top 10 Autores</Text>
             <Text style={styles.seeAll}>Ver más...</Text>
         </View>
         <FlatList
@@ -40,7 +40,7 @@ export default TopAutores
 
 const styles = StyleSheet.create({
     container: {
-        gap: 14
+        gap: 14,
     },
     titleContainer: {
         flexDirection: 'row',
@@ -50,6 +50,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 19,
         fontWeight: '600'
+    },
+    discoverScreenTitle: {
+        fontSize: 22,
+        fontFamily: 'InterSemi',
     },
     seeAll: {
         color: '#FD3510',
