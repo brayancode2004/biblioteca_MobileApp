@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Platform, Alert } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,6 +10,7 @@ import { loginPersonalBibliotecario } from '../../services/PersonalBibliotecario
 import { esCorreoValido, guardarUsuario } from '../../utils/Functions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../../providers/AuthProvider';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 function SignInScreen() {
   const { setSession, session} = useAuth()
@@ -21,10 +22,11 @@ function SignInScreen() {
   const onSignIn = async () => {
     setLoading(true)
     if(!esCorreoValido(cif)){
+      // MODO USUARIOS
       try{
         const credencialesAEnviar = { cif: cif, password: password } 
         const usuario = await loginEstudiante(credencialesAEnviar);
-        guardarUsuario(usuario)
+        guardarUsuario(usuario.data.cif)
         setSession(usuario.data)
         // Revisando si la app ya ha sido iniciada para mostrar o no la onboardinScreen
         const firstLaunch = await AsyncStorage.getItem('@firstLaunch')
@@ -34,15 +36,16 @@ function SignInScreen() {
         }else {
           router.push('(usuario)/homeScreen')
         }
-      }catch(e){
+      }catch(e: any){
         setLoading(false)
         Alert.alert(e.response.data)
       }
     }else{
+      // MODO PERSONAL BIBLIOTECARIO
         try{
           const credencialesAEnviar2 = { correoInstitucional: cif, password: password };
           const usuario = await loginPersonalBibliotecario(credencialesAEnviar2);
-          guardarUsuario(usuario)
+          guardarUsuario(usuario.data.correoInstitucional)
           setSession(usuario.data)
           const firstLaunch = await AsyncStorage.getItem('@firstLaunch')
           setLoading(false)
@@ -51,7 +54,7 @@ function SignInScreen() {
           }else {
             router.push('(bibliotecario)/homeScreen')
           }
-        }catch(e){
+        }catch(e: any){
           // Esto es lo que pasa si la contraseña es incorrecta
         setLoading(false)
         Alert.alert(e.response.data)
@@ -61,11 +64,7 @@ function SignInScreen() {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent} 
-        keyboardShouldPersistTaps='handled'
-        showsVerticalScrollIndicator={false}  
-      >
+    <KeyboardAwareScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
         <SafeAreaView style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
             <Ionicons name='arrow-back-outline' size={24} />
@@ -102,8 +101,7 @@ function SignInScreen() {
             <Text style={styles.signLink} onPress={() => router.push('(auth)/sign-up')}> Regístrate</Text>
           </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 }
 

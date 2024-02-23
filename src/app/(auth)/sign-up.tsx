@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Platform, Alert } from 'react-native'
 import Colors from '../../constants/Colors';
 import { Ionicons } from '@expo/vector-icons'
 import { Image } from 'expo-image';
@@ -9,6 +9,7 @@ import { registerEstudiante } from '../../services/EstudianteService';
 import { useAuth } from '../../providers/AuthProvider';
 import { guardarUsuario } from '../../utils/Functions';
 import { AxiosError } from 'axios';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 function SignUpScreen() {
   const navigation = useNavigation()
@@ -25,11 +26,11 @@ function SignUpScreen() {
         const credencialesAEnviar = { cif: cif, password: password } 
         const usuario = await registerEstudiante(credencialesAEnviar);
         // Guardando la info del usuario para que persista en las sesión
-        guardarUsuario(usuario)
+        guardarUsuario(usuario.data.cif)
         setSession(usuario.data)
         setLoading(false)
         router.push('(auth)/onboardingScreen');
-      }catch(e){
+      }catch(e: any){
         setLoading(false)
         Alert.alert(e.response.data)
       }
@@ -43,11 +44,7 @@ function SignUpScreen() {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent} 
-        keyboardShouldPersistTaps='handled'
-        showsVerticalScrollIndicator={false}
-      >
+    <KeyboardAwareScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
         <SafeAreaView style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
             <Ionicons name='arrow-back-outline' size={24}/>
@@ -94,8 +91,7 @@ function SignUpScreen() {
             <Text style={styles.signLink} onPress={() => router.push('(auth)/sign-in')}> Inicia Sesión</Text>
           </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   )
 }
 

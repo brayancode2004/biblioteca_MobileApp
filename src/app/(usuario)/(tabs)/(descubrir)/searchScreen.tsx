@@ -45,7 +45,7 @@ function SearchScreen() {
                 setSearching(false);
                 setShowNoResultsMessage(false);
             }
-        }, 600); // Esperar 600 milisegundos antes de realizar la búsqueda
+        }, 500); // Esperar 600 milisegundos antes de realizar la búsqueda
 
         // Llamar a la función buscandoLibrosDebounced cada vez que query cambie
         buscandoLibrosDebounced();

@@ -41,10 +41,13 @@ useEffect(() => {
           <FontAwesome name="search" size={22} color={Colors.light.primary} />
         </TouchableOpacity>
       </View>
-      <TopAutores discover={true} />
       <View style={styles.topLibrosContainer}>
-        <Text style={styles.topLibrosTitle}>Top 10 Más Prestados</Text>
         <FlatList
+          ListHeaderComponent={
+          <View style={{gap: 22}}> 
+            <TopAutores discover={true} />
+            <Text style={styles.topLibrosTitle}>Top 10 Más Prestados</Text>
+          </View>  }
           data={topLibros}
           renderItem={({item}) => <BooksCard item={item} top={true}/>}
           numColumns={2}
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
       flex: 1,
       paddingHorizontal: 14,
       gap: 22,
-      backgroundColor: Colors.light.pureWhite
+      backgroundColor: Colors.light.pureWhite,
     },
     header: {
       flexDirection: 'row',
@@ -94,7 +97,7 @@ const styles = StyleSheet.create({
     },
     topLibrosContainer: {
       gap: 14,
-      marginBottom: 170
+      marginBottom: 140
     },
     topLibrosTitle: {
       fontSize: 22,

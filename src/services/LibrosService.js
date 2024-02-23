@@ -1,7 +1,8 @@
 import axios from "axios";
-import { REACT_NATIVE_APP_API_URL } from '@env';
+import { EXPO_PUBLIC_API_URL } from '@env';
 
-const API_URL = 'http://192.168.1.232:8181/api/libros';
+const API_URL = `${EXPO_PUBLIC_API_URL}/libros`;
+console.log(EXPO_PUBLIC_API_URL)
 
 export const obtenerLibrosPorCategorias = (categoria1, categoria2) => {
     return axios.get(`${API_URL}/buscarPorCategorias`, {

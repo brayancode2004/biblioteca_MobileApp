@@ -24,10 +24,10 @@ function DrawerLayout() {
             )
           }}
         />
-        <Drawer.Screen name='settings' 
+        <Drawer.Screen name='(settings)' 
           options={{ 
             title: 'Configuración',
-            headerShown: true,
+            headerShown: false,
             drawerIcon: ({size, color}) => (
               <Ionicons name='settings-outline' size={size} color={color}/>
             )

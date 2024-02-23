@@ -38,10 +38,9 @@ export const esCorreoValido = (email: string) => {
 }
 
 // Guardar un usuario en Async Storage
-export const guardarUsuario = async (valor) => {
+export const guardarUsuario = async (valor: string) => {
   try {
-    const jsonValue = JSON.stringify(valor);
-    await AsyncStorage.setItem('@user', jsonValue);
+    await AsyncStorage.setItem('@user', valor);
     console.log('Objeto guardado correctamente');
   } catch (error) {
     console.error('Error al guardar el objeto:', error);
@@ -52,7 +51,7 @@ export const guardarUsuario = async (valor) => {
 export const obtenerUsuario = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('@user');
-    return jsonValue != null ? JSON.parse(jsonValue).data : null;
+    return jsonValue
   } catch (error) {
     console.error('Error al obtener el objeto:', error);
     return null;

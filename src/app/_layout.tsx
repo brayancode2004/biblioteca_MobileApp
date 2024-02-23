@@ -12,7 +12,9 @@ import {
 import Animated, { FadeIn } from "react-native-reanimated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthProvider, {useAuth} from "../providers/AuthProvider";
-import { obtenerUsuario } from "../utils/Functions";
+import { esCorreoValido, obtenerUsuario } from "../utils/Functions";
+import { obtenerEstudiantePorId } from "../services/EstudianteService";
+import { obtenerPersonalBibliotecarioPorCorreo } from "../services/PersonalBibliotecarioService";
 
 function RootLayout() {
   const { setSession } = useAuth(); // Obtén el contexto AuthContext
@@ -33,7 +35,21 @@ function RootLayout() {
     const checkUserLogged = async () => {
       const userLogged = await obtenerUsuario();
       if(userLogged){
-        setSession(userLogged);
+        if(!esCorreoValido(userLogged)){
+          try{
+            const usuario = await obtenerEstudiantePorId(userLogged);
+            setSession(usuario.data);
+          }catch(e){
+            console.warn(e)
+          }
+        }else {
+          try{
+            const bibliotecario = await obtenerPersonalBibliotecarioPorCorreo(userLogged);
+            setSession(bibliotecario.data)
+          }catch(e){
+            console.warn(e)
+          }
+        }    
       }else {
         setSession(null);
       }

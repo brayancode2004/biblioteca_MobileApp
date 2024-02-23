@@ -1,9 +1,8 @@
 import axios from "axios";
-import { REACT_NATIVE_APP_API_URL } from '@env';
+import { EXPO_PUBLIC_API_URL } from '@env';
 
 
-const API_URL = `${REACT_NATIVE_APP_API_URL}/prestamos`;
-
+const API_URL = `${EXPO_PUBLIC_API_URL}/prestamos`;
 
 export const comprobarElegibilidad = async (cif, idLibro) => {
     const response = await axios.post(`${API_URL}/comprobarElegibilidad`, null, {
