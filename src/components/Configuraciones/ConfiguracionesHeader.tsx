@@ -14,7 +14,7 @@ function ConfiguracionesHeader({ title } : { title: string} ) {
       <View style={styles.headerTitle}>
       <Text style={styles.titleText}>{title}</Text>
       </View>
-      <View style={[styles.backBtn, {backgroundColor: 'transparent', borderColor: Colors.light.pureWhite}]}>
+      <View style={[styles.backBtn, {backgroundColor: 'transparent', borderColor: 'transparent'}]}>
       <Ionicons name='arrow-back-outline' size={24} color='transparent' />
       </View>
     </SafeAreaView>
