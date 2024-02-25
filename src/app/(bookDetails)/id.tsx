@@ -36,7 +36,7 @@ function BookDetails() {
       <View style={styles.root}>
         {/* Book CoverSection */}
         <View style={styles.infoSectionContainer}>
-          <BookInfoSection book={libro} prestamo={false}/>
+          <BookInfoSection book={libro} prestamo={false} calificacion={false}/>
         </View>
 
         {/* Description */}

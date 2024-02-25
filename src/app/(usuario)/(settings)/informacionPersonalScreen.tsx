@@ -4,7 +4,6 @@ import Colors from '../../../constants/Colors';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import ConfiguracionesHeader from '../../../components/Configuraciones/ConfiguracionesHeader';
 import { useAuth } from '../../../providers/AuthProvider';
-import ConfiguracionesBottomTab from '../../../components/Configuraciones/ConfiguracionesBottomTab';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { actualizarInfoEstudiante, obtenerEstudiantePorId } from '../../../services/EstudianteService';
 import { bibliotecaria, user } from '../../../types';

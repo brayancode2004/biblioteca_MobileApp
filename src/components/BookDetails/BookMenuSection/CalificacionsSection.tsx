@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Alert, FlatList, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Image } from 'expo-image';
 import { book, calificacion } from '../../../types';
 import { obtenerCalificacionesPorLibro } from '../../../services/CalificacionService';
 import { renderStarRating } from '../../../utils/Functions';
+import { AntDesign } from '@expo/vector-icons';
 import Colors from '../../../constants/Colors';
+import { router } from 'expo-router';
 
 function CalificacionsSection({ book } : { book: book }) {
   const [loading, setLoading] = useState(true);
@@ -42,7 +44,18 @@ function CalificacionsSection({ book } : { book: book }) {
 
   return (
     <View style={styles.container}>
-      {/* <Text>Calificaciones:</Text> */}
+      <View style={styles.headerContainer}>
+        <View style={styles.headerLeftContainer}>
+          <Text style={styles.calificacionesTitle}>Calificaciones:</Text>
+          <Text style={styles.calificacionesNumber}>({book.numCalificaciones})</Text>
+        </View>
+        <TouchableOpacity style={styles.calificarBtn} 
+          onPress={() => router.push({ params: { idLibro: book.idLibro }, pathname: '(bookDetails)/bookCalificarScreen' })}
+        >
+          <AntDesign name="edit" size={24} color={Colors.light.primary} />
+          <Text style={styles.calificarBtnTitle}>Calificar</Text>
+        </TouchableOpacity>
+      </View>
       <FlatList
         data={calificaciones}
         keyExtractor={(item) => item.idCalificacion.toString()}
@@ -80,7 +93,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     paddingHorizontal: 14,
-    gap: 11
+    marginTop: 11,
+    gap: 22
   },
   calificacionItem: {
     borderBottomWidth: 1,
@@ -111,5 +125,33 @@ const styles = StyleSheet.create({
     color: Colors.light.gray,
     fontSize: 16,
     fontWeight: '600'
+  },
+  headerContainer: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between'
+  },
+  headerLeftContainer: { 
+    flexDirection: 'row', 
+    gap: 2
+  },
+  calificacionesTitle: { 
+    fontWeight: '600', 
+    fontSize: 17
+  },
+  calificacionesNumber: { 
+    color: Colors.light.primary, 
+    fontWeight: '600', 
+    fontSize: 17
+  },
+  calificarBtn: { 
+    flexDirection: 'row', 
+    gap: 4, 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  calificarBtnTitle: {
+    color: Colors.light.primary, 
+    fontWeight: '700', 
+    fontSize: 16
   }
 })

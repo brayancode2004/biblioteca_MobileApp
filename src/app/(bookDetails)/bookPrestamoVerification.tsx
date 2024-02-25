@@ -57,7 +57,7 @@ function BookPrestamoVerification() {
           <>
             {/* Book CoverSection */}
             <View style={styles.infoSectionContainer}>
-              <BookInfoSection book={libro} prestamo={true} />
+              <BookInfoSection book={libro} prestamo={true} calificacion={false}/>
             </View>
 
             {/* Description */}

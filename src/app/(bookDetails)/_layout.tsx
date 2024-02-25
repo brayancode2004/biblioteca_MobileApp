@@ -8,6 +8,7 @@ function BookDetailsLayout() {
         <Stack.Screen name="id"/>
         <Stack.Screen name='bookPrestamoSuccess' />
         <Stack.Screen name='bookPrestamoVerification' />
+        <Stack.Screen name='bookCalificarScreen'/>
     </Stack>
   )
 }

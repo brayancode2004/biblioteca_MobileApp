@@ -9,7 +9,7 @@ import { acortarTexto } from '../../utils/Functions';
 import { book } from '../../types';
 import Colors from '../../constants/Colors';
 
-function BookInfoSection({ book, prestamo } : {book : book, prestamo : boolean}) {
+function BookInfoSection({ book, prestamo, calificacion } : {book : book, prestamo : boolean, calificacion : boolean}) {
 
 
  const renderAutores = () => {
@@ -36,11 +36,11 @@ function BookInfoSection({ book, prestamo } : {book : book, prestamo : boolean})
             </TouchableOpacity>
 
             <View style={styles.headerTitle}>
-                <Text style={styles.titleText}>{prestamo ? 'Confirmar Préstamo' :  'Book Details'}</Text>
+                <Text style={styles.titleText}>{prestamo ? 'Confirmar Préstamo' : calificacion ? 'Añade una Calificación' : 'Book Details'}</Text>
             </View>
             
-            <TouchableOpacity style={prestamo ? {backgroundColor: 'transparent'} :  styles.favoriteBtn}>
-                <AntDesign name='hearto' size={24} color={prestamo ? 'transparent' : 'black'}/>
+            <TouchableOpacity style={[ styles.favoriteBtn, (prestamo || calificacion) && {backgroundColor: 'transparent', borderColor: 'transparent'}]}>
+                <AntDesign name='hearto' size={24} color={prestamo || calificacion ? 'transparent' : 'black'}/>
             </TouchableOpacity>
             </View>
         </SafeAreaView>
