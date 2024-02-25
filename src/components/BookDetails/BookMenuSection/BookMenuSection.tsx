@@ -64,11 +64,15 @@ function BookMenuSection({ book }: { book : book}) {
           </Text>
         </View>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewSections}>
+      {selectedTab === 2 && <CalificacionsSection book={book} />}
+      <ScrollView showsVerticalScrollIndicator={false} 
+          style={styles.scrollViewSections} 
+          contentContainerStyle={{paddingBottom: 22}}>
         {selectedTab === 1 && <AcercaSection book={book}/>}
-        {selectedTab === 2 && <CalificacionsSection book={book} />}
         {selectedTab === 3 && <RelacionadosSections book={book}/> }
       </ScrollView>
+      {/* <View style={styles.scrollViewSections}> */}
+      {/* </View> */}
     </View>
   );
 }
@@ -105,6 +109,7 @@ const styles = StyleSheet.create({
   scrollViewSections: {
     marginTop: 11,
     paddingHorizontal: 22,
+    marginBottom: 32
   
   }
 });

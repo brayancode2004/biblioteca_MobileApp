@@ -82,7 +82,14 @@
     personalRecepcion: bibliotecaria;
   }
   
+  export interface calificacion {
+    idCalificacion: number;
+    idLibro: number; // ¿Necesitas incluir el ID del libro aquí?
+    cifEstudiante: string;
+    nombreCompleto: string; // Se agrega el nombre completo del estudiante
+    userPic: string; // Se agrega la URL de la imagen del estudiante
+    puntuacion: number;
+    comentario: string;
+    // Puedes agregar más campos si es necesario
+  }
 
-
-
-  

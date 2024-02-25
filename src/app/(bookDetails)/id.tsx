@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
   descriptionContainer: {
     flex: 2,
     marginTop: 5,
-    
   },
   buttonsContainer: {
     height: 100,

@@ -60,7 +60,7 @@ function BottonTabs({ idLibro, prestamo } : {idLibro : number, prestamo : boolea
             prestamo ? (
               <>
                 <TouchableOpacity style={styles.prestarBtn} onPress={handlePrestar} disabled={loading}>
-                  <Text style={styles.prestarText}>{ loading ? 'Confirmando Préstamo' : 'Confirmar Préstamo' }</Text>
+                  <Text style={styles.prestarText}>{ loading ? 'Confirmando Préstamo...' : 'Confirmar Préstamo' }</Text>
                   <Foundation name='book-bookmark' size={24} color='white'/>
                 </TouchableOpacity>
               </>
