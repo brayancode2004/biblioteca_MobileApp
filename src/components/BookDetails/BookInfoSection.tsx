@@ -19,6 +19,14 @@ function BookInfoSection({ book, prestamo, calificacion } : {book : book, presta
   return '';
 };
 
+const backBtn = () => {
+  if(calificacion){
+    router.replace({ params: { idLibro: book.idLibro }, pathname: '(bookDetails)/id' })
+  }else{
+    router.back()
+  }
+}
+
 
   return (
     <View style={styles.container}>
@@ -31,7 +39,7 @@ function BookInfoSection({ book, prestamo, calificacion } : {book : book, presta
         {/* Header */}
         <SafeAreaView>
             <View style={styles.header}>
-            <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
+            <TouchableOpacity onPress={backBtn} style={styles.backBtn}>
                 <Ionicons name='arrow-back-outline' size={24}/>
             </TouchableOpacity>
 

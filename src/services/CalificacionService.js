@@ -7,11 +7,12 @@ const API_URL = `${EXPO_PUBLIC_API_URL}/calificaciones`;
 
 // Suponiendo que tu archivo se llama "LibrosService.js" o algo similar
 
-export const enviarCalificacion = (cifEstudiante, idLibro, puntuacion) => {
+export const enviarCalificacion = (cifEstudiante, idLibro, puntuacion, comentario) => {
     return axios.post(`${API_URL}/guardar`, {
         cifEstudiante,
         idLibro,
-        puntuacion
+        puntuacion,
+        comentario
     });
 };
 
