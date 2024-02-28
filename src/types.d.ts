@@ -93,3 +93,9 @@
     // Puedes agregar más campos si es necesario
   }
 
+  interface favorito {
+    id: number;
+    estudiante: user;
+    libro: book;
+  }
+

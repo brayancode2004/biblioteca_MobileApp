@@ -9,11 +9,10 @@ export const acortarTexto = (texto: string, longitud: number): string => {
     }
 }
 
-export const renderStarRating = (rating: number) => {
+export const renderStarRating = (rating: number, size: number) => {
   const starArray = [];
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 !== 0;
-  const size = 18;
   // Agrega estrellas completas
   for (let i = 0; i < fullStars; i++) {
     starArray.push(<FontAwesome name='star' key={i} color="#FCBA02" size={size}  />);

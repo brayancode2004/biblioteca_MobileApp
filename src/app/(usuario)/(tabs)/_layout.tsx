@@ -62,7 +62,8 @@ function TabsLayout () {
         title: "Favoritos",
         tabBarIcon: ({ size, color}) => (
           <MaterialIcons name="favorite" size={size} color={color}/>
-        )
+        ),
+        unmountOnBlur: true
       }}
     />
   </Tabs>

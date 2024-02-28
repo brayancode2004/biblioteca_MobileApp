@@ -129,7 +129,7 @@ function CalificacionItem ({ calificacion } : { calificacion: calificacion}) {
       <Text style={styles.comentario}>{calificacion.comentario}</Text>
       <View style={{ flexDirection: 'row', gap: 11}}>
         <View style={{ flexDirection: 'row', gap: 4}}>
-          {renderStarRating(calificacion.puntuacion)}
+          {renderStarRating(calificacion.puntuacion, 18)}
         </View>
         <Text style={styles.puntuacion}>{calificacion.puntuacion}</Text>
       </View>

@@ -15,7 +15,7 @@ function BooksCard({ item, top }: { item: book, top: boolean }) {
       <Text style={styles.author}>{acortarTexto(item.autores[0].nombreAutor, 12) }</Text>
       <View style={styles.stars}>
         {
-          renderStarRating(item.calificacionPromedio)
+          renderStarRating(item.calificacionPromedio, 18)
         }
       </View>
       </View>

@@ -1,5 +1,5 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Alert, Dimensions, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons, AntDesign } from '@expo/vector-icons'
 import { router, useNavigation } from 'expo-router';
@@ -8,24 +8,63 @@ import { Image } from 'expo-image';
 import { acortarTexto } from '../../utils/Functions';
 import { book } from '../../types';
 import Colors from '../../constants/Colors';
+import { esFavorito, marcarComoFavorito, quitarFavorito } from '../../services/EstudianteService';
+import { useAuth } from '../../providers/AuthProvider';
 
 function BookInfoSection({ book, prestamo, calificacion } : {book : book, prestamo : boolean, calificacion : boolean}) {
+  const { session } = useAuth(); 
+  const [favorite, setFavorite] = useState<boolean>();
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if(!prestamo && !calificacion){
+      const checkIsFavorite = async () => {
+        const response = await esFavorito(session && 'cif' in session && session.cif, book.idLibro);
+        setFavorite(response);
+      }
+      checkIsFavorite();
+    }
+  },[])
 
- const renderAutores = () => {
-  if (book.autores && book.autores.length > 0) {
-    return book.autores.map(autor => autor.nombreAutor).join(', ');
+  const renderAutores = () => {
+    if (book.autores && book.autores.length > 0) {
+      return book.autores.map(autor => autor.nombreAutor).join(', ');
+    }
+    return '';
+  };
+
+  const backBtn = () => {
+    if(calificacion){
+      router.replace({ params: { idLibro: book.idLibro }, pathname: '(bookDetails)/id' })
+    }else{
+      router.back()
+    }
   }
-  return '';
-};
 
-const backBtn = () => {
-  if(calificacion){
-    router.replace({ params: { idLibro: book.idLibro }, pathname: '(bookDetails)/id' })
-  }else{
-    router.back()
-  }
-}
+  const handleFavorites = async () => {
+    if (!prestamo && !calificacion) {
+      try {
+        setLoading(true);
+        if (favorite) {
+          await quitarFavorito(
+            session && 'cif' in session && session.cif,
+            book.idLibro
+          );
+          setFavorite(false);
+        } else {
+          await marcarComoFavorito(
+            session && 'cif' in session && session.cif,
+            book.idLibro
+          );
+          setFavorite(true);
+        }
+        setLoading(false);
+      } catch (error: any) {
+        Alert.alert('Error al quitar de favoritos:', error.message);
+        setLoading(false);
+      }
+    }
+  };
 
 
   return (
@@ -47,8 +86,12 @@ const backBtn = () => {
                 <Text style={styles.titleText}>{prestamo ? 'Confirmar Préstamo' : calificacion ? 'Añade una Calificación' : 'Book Details'}</Text>
             </View>
             
-            <TouchableOpacity style={[ styles.favoriteBtn, (prestamo || calificacion) && {backgroundColor: 'transparent', borderColor: 'transparent'}]}>
-                <AntDesign name='hearto' size={24} color={prestamo || calificacion ? 'transparent' : 'black'}/>
+            <TouchableOpacity 
+              style={[ styles.favoriteBtn, (prestamo || calificacion) && {backgroundColor: 'transparent', borderColor: 'transparent'}]}
+              onPress={handleFavorites}
+              disabled={loading}
+              >
+                <AntDesign name={favorite ? 'heart' : 'hearto'} size={24} color={prestamo || calificacion ? 'transparent' : favorite ? 'red' : 'black'}/>
             </TouchableOpacity>
             </View>
         </SafeAreaView>
