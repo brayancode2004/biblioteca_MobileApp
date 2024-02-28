@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView, Alert, FlatList, ActivityIndicato
 import { favorito, book } from '../../../types';
 import { useAuth } from '../../../providers/AuthProvider';
 import Colors from '../../../constants/Colors';
+import { Image } from 'expo-image';
 import { obtenerFavoritos } from '../../../services/EstudianteService';
 import FavoritosItem from '../../../components/Favoritos/favoritosItem';
 
@@ -46,18 +47,24 @@ function FavoritosScreen() {
     fetchFavoritos();
   },[])
 
+  const removeFromFavorites = (idLibro: number) => {
+    setFavoritos(prevFavoritos => prevFavoritos.filter(favorito => favorito.libro.idLibro !== idLibro));
+  };
+  
+  
   const flatListHeader = () => {
     return(
       !loading && favoritos.length < 1 && (
-        <View style={{marginTop: 226, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{marginTop: 110, justifyContent: 'center', alignItems: 'center', gap: 11}}>
+          <Image source={require('../../../../assets/nodata.svg')} style={{ width: 200, height: 200}}/>
           <Text style={{
-            fontWeight: '500', 
-            fontSize: 28, 
+            fontWeight: '600', 
+            fontSize: 26, 
             textAlign: 'center',
             color: Colors.light.gray
           }}
             >
-              Aún no has añadido libros a Favoritos🤡
+              ¡Aún no has añadido libros a Favoritos🤡!
             </Text>
           </View>
         )
@@ -67,13 +74,11 @@ function FavoritosScreen() {
   return (
     <SafeAreaView style={styles.container}>
         <Text style={styles.title}>Libros Favoritos</Text>
-
-
         <FlatList
           ListHeaderComponent={flatListHeader}
           data={favoritos}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <FavoritosItem favorito={item} />}
+          renderItem={({ item }) => <FavoritosItem favorito={item} onUpdateFavoritos={(idLibro) => removeFromFavorites(idLibro)} />}
           onEndReached={fetchFavoritos}
               // onEndReachedThreshold={0.1} 
           style={styles.flatList}

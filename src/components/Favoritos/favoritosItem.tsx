@@ -1,21 +1,36 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react';
+import { Alert, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react';
 import { Image } from 'expo-image';
 import { book, favorito } from '../../types';
 import { AntDesign} from '@expo/vector-icons'
 import { renderStarRating } from '../../utils/Functions';
 import Colors from '../../constants/Colors';
+import { quitarFavorito } from '../../services/EstudianteService';
+import { router } from 'expo-router';
 
-function FavoritosItem({favorito} : { favorito : favorito}) {
+function FavoritosItem({ favorito, onUpdateFavoritos }: { favorito: favorito, onUpdateFavoritos: (idLibro: number) => void }) {
+  const [favorite, setFavorite] = useState(true);
+
+  const handleRemoveFromFavorites = async () => {
+    try {
+      setFavorite(false);
+      await quitarFavorito(favorito.estudiante.cif, favorito.libro.idLibro); // Llama a la función quitarFavorito
+      onUpdateFavoritos(favorito.libro.idLibro); // Actualiza la lista de favoritos después de quitar el libro
+    } catch (error: any) {
+      setFavorite(true)
+      Alert.alert('Error al quitar de favoritos:', error.message);
+    }
+  };
+
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={() => router.push({ params: { idLibro: favorito.libro.idLibro }, pathname: '(bookDetails)/id' })}>
     <Image
       source={{ uri: favorito.libro.imagen}}
       style={styles.image}
       contentFit='fill'
     />
     <View style={{ flex: 1, justifyContent: 'center', gap: 17 }}>
-      <View style={styles.subtitleContainer}>
+      <View>
         <Text style={styles.title}>{favorito.libro.titulo}</Text>
         <Text style={styles.autores}>{favorito.libro.autores[0].nombreAutor}</Text>
       </View>
@@ -25,15 +40,19 @@ function FavoritosItem({favorito} : { favorito : favorito}) {
         </View>
     </View>
     <View style={styles.quantitySelector}>
+      <TouchableOpacity 
+        style={{backgroundColor: '#ddd', padding: 5, borderRadius: 22}}
+        onPress={handleRemoveFromFavorites}
+        >
         <AntDesign
-            // onPress={() => }
-            size={29}
-            name="heart"
-            color={'red'}
+            size={22}
+            name={favorite ? 'heart' : 'hearto'}
+            color={favorite ? 'red' : 'black'}
             style={{ padding: 5 }}
         />
+      </TouchableOpacity>
     </View>
-  </View>
+  </Pressable>
   )
 }
 
@@ -62,9 +81,6 @@ const styles = StyleSheet.create({
         fontSize: 17,
         marginBottom: 5,
       },
-      subtitleContainer: {
-        gap: 0,
-      },
       calificacion:{
         color: Colors.light.gray,
         fontWeight: '700',
@@ -80,14 +96,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: Colors.light.gray,
         fontSize: 16
-      },
-      renovartBtn: {
-        backgroundColor: Colors.light.primary,
-        padding: 8,
-        borderRadius: 6
-      },
-      renovarText: {
-        color: Colors.light.pureWhite,
-        fontWeight: '700'
       },
 })
