@@ -11,53 +11,64 @@ import { useAuth } from '../../../providers/AuthProvider';
 
 function CalificacionsSection({ book } : { book: book }) {
   const { session } = useAuth()
-  const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState();
+  const [loading, setLoading] = useState(false);
+  const [checkingCalificado, setCheckingCalificado] = useState(false);
   const [calificaciones, setCalificaciones] = useState<calificacion[]>([]);
-  const [page, setPage] = useState(0);
-  const [reachedEnd, setReachedEnd] = useState(false); // Nueva bandera para indicar si se ha alcanzado el final de la lista
-  const pageSize = 10; // Tamaño de página
   const [yaCalificado, setYaCalificado] = useState();
+  const [nextPage, setNextPage] = useState(0);
+  const [listEnded, setListEnded] = useState(false);
+  const pageSize = 10; // Tamaño de página
 
-  const fetchCalificaciones = async () => {
-    try {
-      setLoading(true);
-      const response = await obtenerCalificacionesPorLibro(book.idLibro, page, pageSize);
-      if (response.content.length === 0) {
-        setReachedEnd(true); // Se ha alcanzado el final de la lista
-      } else {
-        setCalificaciones(prevCalificaciones => [...prevCalificaciones, ...response.content]);
-      }
+  const checkCalificado = async () => {
+    try{
+      setCheckingCalificado(true);
       if(session && 'cif' in session){
         const response2 = await verificarCalificacion(session.cif,book.idLibro)
         setYaCalificado(response2)
+        setCheckingCalificado(false);
       }
-      setLoading(false);
-    } catch (error) {
-      console.error('Error al obtener las calificaciones del libro:', error);
-      // Manejar el error según sea necesario
-      setLoading(false);
+    }catch(e : any){
+      const mensajeError = e.response && e.response.data && typeof e.response.data === 'object' 
+      ? e.response.data.message 
+      : e.response.data;
+      Alert.alert(mensajeError);
+      setCheckingCalificado(false);
+    }
+  }
+
+  const fetchCalificaciones = async () => {
+    if(loading){
+      return
+    }
+    if(!listEnded){
+      try{
+        setLoading(true);
+        const response = await obtenerCalificacionesPorLibro(book.idLibro, nextPage, pageSize);
+        if(response.content.length > 0) {
+          setCalificaciones((prevCalificaciones) => {
+              return [...prevCalificaciones, ...response.content]
+          });
+          setNextPage(nextPage + 1);
+          setLoading(false);
+        }else{
+          setListEnded(true)
+          setLoading(false)
+        }
+      }catch(e : any){
+        const mensajeError = e.response && e.response.data && typeof e.response.data === 'object' 
+        ? e.response.data.message 
+        : e.response.data;
+        Alert.alert(mensajeError)
+        setLoading(false);
+      }
     }
   };
 
   useEffect(() => {
+    checkCalificado();
     fetchCalificaciones();
-  }, [book.idLibro, page]);
+  }, []);
 
-  const loadMoreCalificaciones = async () => {
-    if (!loadingMore && !reachedEnd) { // Solo cargar más si no estás cargando y no has alcanzado el final de la lista
-      setPage(page + 1);
-    }
-  };
-
-  if(loading){
-    return(
-      <View style={{paddingTop: 55, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size={28} color={Colors.light.primary}/>
-      </View>
-
-    )
-  }else {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
@@ -65,42 +76,47 @@ function CalificacionsSection({ book } : { book: book }) {
             <Text style={styles.calificacionesTitle}>Calificaciones:</Text>
             <Text style={styles.calificacionesNumber}>({book.numCalificaciones})</Text>
           </View>
-          <TouchableOpacity style={styles.calificarBtn} 
-            onPress={() => router.replace({ params: { idLibro: book.idLibro }, pathname: '(bookDetails)/bookCalificarScreen' })}
-            disabled={yaCalificado}
-          >
-            <AntDesign name="edit" size={24} color={yaCalificado ? Colors.light.gray : Colors.light.primary} />
-            <Text style={[styles.calificarBtnTitle, yaCalificado && {color: Colors.light.gray}]}>{yaCalificado ? 'Calificado' : 'Calificar'}</Text>
-          </TouchableOpacity>
+          {
+            checkingCalificado ? (
+              <ActivityIndicator/>
+            ): (
+            <TouchableOpacity style={styles.calificarBtn} 
+              onPress={() => router.replace({ params: { idLibro: book.idLibro }, pathname: '(bookDetails)/bookCalificarScreen' })}
+              disabled={yaCalificado}
+            >
+              <AntDesign name="edit" size={24} color={yaCalificado ? Colors.light.gray : Colors.light.primary} />
+              <Text style={[styles.calificarBtnTitle, yaCalificado && {color: Colors.light.gray}]}>{yaCalificado ? 'Calificado' : 'Calificar'}</Text>
+            </TouchableOpacity>
+            )
+          }
         </View>
-        {
-          calificaciones.length > 0 ? (
-              <FlatList
+            {
+              !loading && calificaciones.length < 1 && (
+                <View style={{marginTop: 22, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{
+                  fontWeight: '500', 
+                  fontSize: 22, 
+                  textAlign: 'center',
+                  color: Colors.light.gray
+                }}
+                >
+                  Tú puedes ser el primero en dar tu opinión🤯
+                </Text>
+              </View>
+              )
+            }
+            <FlatList
               data={calificaciones}
-              keyExtractor={(item) => item.idCalificacion.toString()}
-              renderItem={({ item }) => <CalificacionItem calificacion={item} key={item.idCalificacion}/>}
-              onEndReached={loadMoreCalificaciones}
-              onEndReachedThreshold={0.1} // Ajusta este valor según sea necesario
-              ListFooterComponent={loadingMore ? <ActivityIndicator size="small" color="#000" /> : null}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => <CalificacionItem calificacion={item} />}
+              onEndReached={fetchCalificaciones}
+              // onEndReachedThreshold={0.1} 
+              style={{ marginBottom: 217}}
+              ListFooterComponent={() => (loading && <ActivityIndicator size="small" color={Colors.light.primary} /> )}
             />
-          ): (
-            <View style={{marginTop: 22, justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{
-                fontWeight: '500', 
-                fontSize: 22, 
-                textAlign: 'center',
-                color: Colors.light.gray
-              }}
-              >
-                Tú puedes ser el primero en dar su opinión🤯
-              </Text>
-            </View>
-          )
-        }
 
       </View>
     );
-  }
 }
 
 function CalificacionItem ({ calificacion } : { calificacion: calificacion}) {
@@ -190,3 +206,5 @@ const styles = StyleSheet.create({
     fontSize: 16
   }
 })
+
+

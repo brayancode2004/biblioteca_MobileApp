@@ -122,7 +122,7 @@ function BookCalificarScreen() {
               <Rating 
                 ratingCount={5} 
                 imageSize={47} 
-                onFinishRating={(rating) => { console.log("rating: ", rating); setRatingValue(rating); }} 
+                onFinishRating={(rating : any) => { setRatingValue(rating); }} 
                 style={{ marginTop: 15, 
                 alignSelf: "center"}} 
                 jumpValue={0.5} 
