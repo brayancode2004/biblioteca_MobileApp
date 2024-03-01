@@ -16,36 +16,6 @@ export default function HomeScreen() {
       <ScrollView showsVerticalScrollIndicator={false} style={{ marginBottom: 60}}>
           <View style={styles.componentsContainer}>
             <Header />
-            {/* Slider con imágenes Promocionales */}
-            <Text>BIBLIOTECARIO</Text>
-            {/* <PromotionSlider /> */}
-            {/* Slider Top Autores */}
-            <TopAutores />
-            <View style={styles.slidersContainer}>
-              <ToggleSwitch isAcademic={category1} setIsAcademic={setCategory1}/>
-              <View style={styles.categoriesContainer}>
-                {
-                  category1 === true ? (
-                    <>
-                    <BooksSlider category1={'Literatura'} category2={"Adolescente"}/>
-                    <BooksSlider category1={'Literatura'} category2={"Ficción"}/>
-                    <BooksSlider category1={'Literatura'} category2={"Thriller"}/>
-                    <BooksSlider category1={'Literatura'} category2={"Biografía"}/>
-                    <BooksSlider category1={'Literatura'} category2={"Poesía"}/>
-                    </>
-                  ):(
-                    <>
-                      <BooksSlider category1={'Académico'} category2={"Medicina"}/>
-                      <BooksSlider category1={'Académico'} category2={"Ingeniería"}/>
-                      <BooksSlider category1={'Académico'} category2={"Derecho"}/>
-                      <BooksSlider category1={'Académico'} category2={"Marketing"}/>
-                      <BooksSlider category1={'Académico'} category2={"Arquitectura"}/>
-                    </>
-                  )
-                }
-              </View>
-
-            </View>
           </View>
       </ScrollView>
     </SafeAreaView>

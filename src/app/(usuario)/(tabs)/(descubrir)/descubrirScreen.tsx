@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native'
 import React, {useState, useEffect} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FontAwesome } from '@expo/vector-icons';
 import { obtenerTop10LibrosMasPrestados } from '../../../../services/PrestamosService';
 import BooksCard from '../../../../components/Home/BooksCard';
 import Colors from '../../../../constants/Colors';
-import { router } from 'expo-router';
 import TopAutores from '../../../../components/Home/TopAutores';
+import SearchHeader from '../../../../components/CommonComponents/SearchHeader';
 
 
 function DescubrirScreen() {
@@ -28,19 +27,7 @@ useEffect(() => {
 }, []);
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.title1}>Te Podría</Text>
-          <View style={{ flexDirection: 'row', gap: 4, alignItems: 'flex-end'}}>
-            <Text style={styles.title2}>Interesar</Text>
-            <FontAwesome name="arrow-down" size={20} color={Colors.light.primary} />
-          </View>
-        </View>
-          {/* Boton de busqueda */}
-        <TouchableOpacity style={styles.iconContainer} onPress={() => router.push('/searchScreen')}>
-          <FontAwesome name="search" size={22} color={Colors.light.primary} />
-        </TouchableOpacity>
-      </View>
+      <SearchHeader tipo='discover'/>
       <View style={styles.topLibrosContainer}>
         <FlatList
           ListHeaderComponent={
@@ -67,33 +54,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 14,
       gap: 22,
       backgroundColor: Colors.light.pureWhite,
-    },
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      borderBottomWidth: 1,
-      borderBottomColor: '#ddd',
-      paddingBottom: 11,
-      paddingHorizontal: 11
-    },
-    title1: {
-      fontSize: 22,
-      color: Colors.light.gray,
-      fontWeight: '700'
-    },
-    title2: {
-      fontSize: 22,
-      color: Colors.light.primary,
-      fontFamily: 'InterBold',
-    },
-    iconContainer: {
-      width: 50,
-      height: 50,
-      backgroundColor: Colors.light.clearGray,
-      borderRadius: 50,
-      justifyContent: 'center',
-      alignItems: 'center'
     },
     topLibrosContainer: {
       gap: 14,

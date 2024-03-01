@@ -3,17 +3,17 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../../../components/Descubrir/SearchBar';
 
-function DescubrirScreen() {
+function PrestamosControlScreen() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}> 
         <SafeAreaView style={styles.container}>
-            <SearchBar/>
+          <Text>Control de Préstamos</Text>
         </SafeAreaView>
     </TouchableWithoutFeedback>
   )
 }
 
-export default DescubrirScreen;
+export default PrestamosControlScreen;
 
 const styles = StyleSheet.create({
     container: {

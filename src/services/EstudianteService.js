@@ -93,7 +93,7 @@ export const obtenerFavoritos = async (cifEstudiante, page = 0, size = 10) => {
     } catch (error) {
         Alert.alert('Error al obtener tus libros favoritos:', error);
     }
-};
+}; 
 
 export const esFavorito = async (cifEstudiante, idLibro) => {
     try {

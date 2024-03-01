@@ -124,7 +124,7 @@ function SearchScreen() {
                                             <Text style={styles.bookTitle}>{book.titulo}</Text>
                                             <Text style={styles.bookAutors}>{book.autores[0].nombreAutor}</Text>
                                             <View style={styles.stars}>
-                                                {renderStarRating(book.calificacionPromedio)}
+                                                {renderStarRating(book.calificacionPromedio, 20)}
                                             </View>
                                         </View>
                                     </Pressable>

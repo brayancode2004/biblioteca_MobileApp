@@ -1,7 +1,6 @@
 import { DrawerToggleButton } from "@react-navigation/drawer";
 import { Tabs } from "expo-router";
-import Ionicons from '@expo/vector-icons/Ionicons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import {Ionicons, FontAwesome5} from '@expo/vector-icons';
 
 
 function TabsLayout () {
@@ -38,29 +37,29 @@ function TabsLayout () {
         }}
     />
     <Tabs.Screen
-      name="descubrirScreen"
+      name="prestamosControlScreen"
       options={{
-        title: "Descubrir",
+        title: "Préstamos",
         tabBarIcon: ({ size, color }) => (
-          <Ionicons name="search" size={size} color={color}/>
+          <Ionicons name="library" size={size} color={color}/>
         ),
       }}
     />
     <Tabs.Screen 
-        name="prestamosScreen"
+        name="inventarioScreen"
         options={{
-            title: "Mis Préstamos",
+            title: "Inventario",
             tabBarIcon: ({ size, color}) => (
-              <Ionicons name='library' size={size} color={color}/>
+              <FontAwesome5 name='clipboard-list' size={size} color={color}/>
             )
         }}
     />
     <Tabs.Screen
-      name="favoritosScreen"
+      name="usuariosScreen"
       options={{
-        title: "Favoritos",
+        title: "Usuarios",
         tabBarIcon: ({ size, color}) => (
-          <MaterialIcons name="favorite" size={size} color={color}/>
+          <FontAwesome5 name="users-cog" size={size} color={color}/>
         )
       }}
     />

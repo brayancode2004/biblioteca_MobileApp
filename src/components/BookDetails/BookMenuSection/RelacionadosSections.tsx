@@ -36,7 +36,7 @@ function RelacionadosSections({ book } : { book: book }) {
                 <Text style={styles.bookAutors}>{book.autores[0].nombreAutor}</Text>
                 <View style={styles.stars}>
                   {
-                    renderStarRating(book.calificacionPromedio)
+                    renderStarRating(book.calificacionPromedio, 18)
                   }
                 </View>
               </View>

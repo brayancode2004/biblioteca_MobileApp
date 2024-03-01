@@ -45,4 +45,18 @@ export const obtenerLibrosPorAutor = async (idAutor) => {
     return response.data;
 };
 
+export const obtenerAutoresPaginados = async ( page = 0, size = 10) => {
+    try {
+        const response = await axios.get(`${API_URL}/allPaginados`, {
+            params: {
+                page: page,
+                size: size
+            }
+        });
+        return response.data;
+    } catch (error) {
+        Alert.alert('Error al obtener el inventario de los autores:', error.message);
+    } 
+};
+
 

@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 
-function FavoritosScreen() {
+function UsuariosScreen() {
   return (
     <SafeAreaView>
-        <Text style={styles.title}>Libros Favoritos</Text>
+        <Text style={styles.title}>Usuarios Screen</Text>
     </SafeAreaView>
   )
 }
@@ -15,4 +15,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default FavoritosScreen
+export default UsuariosScreen

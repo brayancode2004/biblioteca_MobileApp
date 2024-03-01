@@ -1,5 +1,5 @@
 // Autor.ts
-  export interface Autor {
+  export interface autor {
     idAutor: number;
     nombreAutor: string;
     descripcion: string;
@@ -34,7 +34,7 @@
     numCalificaciones: number;
     estado: boolean;
     ubicacion: Ubicacion;
-    autores: Autor[];
+    autores: autor[];
     categorias: Categoria[];
   }
 

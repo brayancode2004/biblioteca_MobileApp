@@ -1,5 +1,6 @@
 import axios from "axios";
 import { EXPO_PUBLIC_API_URL } from '@env';
+import { Alert } from "react-native";
 
 const API_URL = `${EXPO_PUBLIC_API_URL}/libros`;
 console.log(EXPO_PUBLIC_API_URL)
@@ -48,3 +49,17 @@ export const buscarLibros = (keyword) => {
         }
     });
 };
+
+export const obtenerLibrosPaginados = async ( page = 0, size = 10) => {
+    try {
+        const response = await axios.get(`${API_URL}/allPaginados`, {
+            params: {
+                page: page,
+                size: size
+            }
+        });
+        return response.data;
+    } catch (error) {
+        Alert.alert('Error al obtener el inventario de los libros:', error.message);
+    } 
+}; 
