@@ -3,11 +3,12 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Image } from 'expo-image';
 import { book } from '../../types';
 import { renderStarRating } from '../../utils/Functions';
+import { router } from 'expo-router';
 
 function BookHorizontalItem({ book } : { book: book }) {
   return (
     <Pressable style={styles.container} 
-        // onPress={() => router.push({ params: { idLibro: book.idLibro }, pathname: '(bookDetails)/id' })}
+        onPress={() => router.push({ params: { idLibro: book.idLibro, tipo: 'actualizar/eliminar' }, pathname: '(inventario)/book' })}
     >
         <Image source={{ uri: book.imagen}} style={styles.bookImagen}/>
         <View style={styles.bookInfoSection}>

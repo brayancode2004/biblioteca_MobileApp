@@ -5,6 +5,7 @@ import { obtenerLibrosPaginados } from '../../services/LibrosService';
 import Colors from '../../constants/Colors';
 import { MaterialIcons } from '@expo/vector-icons';
 import BookHorizontalItem from '../CommonComponents/BookHorizontalItem';
+import { router } from 'expo-router';
 
 function BooksSection() {
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,9 @@ function BooksSection() {
   const flatListHeader = () => {
     return(
         <View>
-            <TouchableOpacity style={styles.addBtn}>
+            <TouchableOpacity style={styles.addBtn} 
+              onPress={() => router.push({ params: { tipo: 'crear' }, pathname: '(inventario)/book' })}
+            >
                 <MaterialIcons name="library-add" size={24} color={Colors.light.pureWhite} />
                 <Text style={styles.addBtnTitle}>Añadir Libro</Text>
             </TouchableOpacity>

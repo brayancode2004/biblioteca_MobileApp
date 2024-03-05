@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Stack } from 'expo-router';
 
@@ -14,5 +13,3 @@ function BookDetailsLayout() {
 }
 
 export default  BookDetailsLayout;
-
-const styles = StyleSheet.create({})

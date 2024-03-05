@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet,View, Switch, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PromotionSlider from "../../../components/Home/PromotionSlider";
-import Header from "../../../components/Home/Header";
+import Header from "../../../components/Home/UserHeader";
 import TopAutores from "../../../components/Home/TopAutores";
 import { ScrollView } from "react-native-gesture-handler";
 import BooksSlider from "../../../components/Home/BooksSlider";
