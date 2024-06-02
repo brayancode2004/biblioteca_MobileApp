@@ -3,7 +3,6 @@ import { EXPO_PUBLIC_API_URL } from '@env';
 import { Alert } from "react-native";
 
 const API_URL = `${EXPO_PUBLIC_API_URL}/libros`;
-console.log(EXPO_PUBLIC_API_URL)
 
 export const obtenerLibrosPorCategorias = (categoria1, categoria2) => {
     return axios.get(`${API_URL}/buscarPorCategorias`, {

@@ -4,6 +4,7 @@ import { Alert } from "react-native";
 
 
 const API_URL = `${EXPO_PUBLIC_API_URL}/calificaciones`;
+console.log(EXPO_PUBLIC_API_URL)
 
 // Suponiendo que tu archivo se llama "LibrosService.js" o algo similar
 

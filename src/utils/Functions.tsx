@@ -1,5 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { bibliotecaria, user } from '../types';
 
 export const acortarTexto = (texto: string, longitud: number): string => {
     if (texto.length > longitud) {
@@ -94,4 +95,8 @@ export function getColorPorEstado(estado : string) {
     default:
       return 'inherit'; // o cualquier color por defecto
   }
+}
+
+export function isUser(session: user | bibliotecaria | null): session is user {
+  return (session as user)?.cif !== undefined;
 }

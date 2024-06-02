@@ -9,7 +9,7 @@ import { router } from 'expo-router';
 import { renovarPrestamo } from '../../services/PrestamosService';
 import { useAuth } from '../../providers/AuthProvider';
 
-function PrestamoItem({ prestamo }: {prestamo: prestamo}) {
+function PrestamoItem( {prestamo }) {
   const { session } = useAuth();
   const [renovando, setRenovando] = useState(false)
   
@@ -33,13 +33,13 @@ function PrestamoItem({ prestamo }: {prestamo: prestamo}) {
     return (
         <View style={styles.container}>
           <Image
-            source={{ uri: prestamo.libro.imagen}}
+            source={{ uri: prestamo.libroImagen}}
             style={styles.image}
             contentFit='fill'
           />
     
           <View style={{ flex: 1 }}>
-            <Text style={styles.title}>{prestamo.libro.titulo}</Text>
+            <Text style={styles.title}>{prestamo.libroTitulo}</Text>
             <View style={styles.subtitleContainer}>
               <Text style={[styles.estado, { color: getColorPorEstado(prestamo.estado) }]}>{prestamo.estado.toUpperCase()}</Text>
               <View>

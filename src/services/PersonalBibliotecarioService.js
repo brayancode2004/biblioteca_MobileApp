@@ -2,6 +2,7 @@ import axios from "axios";
 import { EXPO_PUBLIC_API_URL } from '@env';
 
 const API_URL = `${EXPO_PUBLIC_API_URL}/personalbibliotecario`;
+console.log(EXPO_PUBLIC_API_URL)
 
 export const loginPersonalBibliotecario = (credenciales) => {
     return axios.post(`${API_URL}/login`,credenciales)

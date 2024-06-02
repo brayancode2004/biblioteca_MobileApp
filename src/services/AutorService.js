@@ -2,6 +2,7 @@ import axios from "axios";
 import { EXPO_PUBLIC_API_URL } from '@env';
 
 const API_URL = `${EXPO_PUBLIC_API_URL}/autores`;
+console.log(EXPO_PUBLIC_API_URL)
 
 // Obtener todos los autores
 export const obtenerTodosLosAutores = async () => {

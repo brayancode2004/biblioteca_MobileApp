@@ -3,6 +3,8 @@ import { EXPO_PUBLIC_API_URL } from '@env';
 import { Alert } from "react-native";
 
 const API_URL = `${EXPO_PUBLIC_API_URL}/estudiante`;
+console.log(EXPO_PUBLIC_API_URL)
+
 export const obtenerEstudiantes = () => {
     return axios.get(`${API_URL}/all`);
 };

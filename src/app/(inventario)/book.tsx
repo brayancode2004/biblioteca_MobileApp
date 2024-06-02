@@ -12,6 +12,7 @@ import { Image } from 'expo-image';
 import LottieView from 'lottie-react-native';
 import { obtenerTodosLosAutores } from '../../services/AutorService';
 import { obtenerTodasLasCategorias } from '../../services/CategoriaService';
+import AuthorsMultipleSelector from '../../components/Inventario/AuthorsMultipleSelector';
 
 function Book() {
     const { idLibro, tipo } = useLocalSearchParams();
@@ -38,6 +39,30 @@ function Book() {
     const [eliminado, setEliminado] = useState(false);
     const [autoresSeleccionados, setAutoresSeleccionados] = useState([]);
     const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState([]);
+    console.warn('book', nuevoLibro.autoresId)
+    const fetchBook = async () => {
+        try {
+            setFetching(true);
+            const libro = await obtenerLibroPorId(idLibro);
+            setNuevoLibro({
+                titulo: libro.titulo,
+                sinopsis: libro.sinopsis,
+                imagen: libro.imagen,
+                añoPublicacion: libro.añoPublicacion,
+                isbn: libro.isbn,
+                numCopiasTotales: libro.numCopiasTotales,
+                numCopiasDisponibles: libro.numCopiasDisponibles,
+                numEstante: libro.ubicacion ? libro.ubicacion.numEstante : '',
+                numRepisa: libro.ubicacion ? libro.ubicacion.numRepisa : '',
+                autoresId: libro.autores.map(autor => autor.idAutor),
+                categoriasId: libro.categorias.map(categoria => categoria.idCategoria)
+            });
+            setFetching(false);
+        } catch (e : any) {
+            setFetching(false);
+            Alert.alert(e.message);
+        }
+    };
 
     const fetchAutores = async () => {
         try {
@@ -92,7 +117,6 @@ function Book() {
             await deshabilitarLibro(idLibro);
             setLoading(false);
             setEliminado(true)
-            // Lógica adicional después de eliminar el libro, por ejemplo, redireccionar a otra pantalla
         } catch (e : any) {
             setLoading(false);
             Alert.alert(e.message);
@@ -126,64 +150,17 @@ function Book() {
     }
          
     useEffect(() => {
-        fetchAutores();
-        fetchCategorias();
-    
+        // fetchAutores();
+        // fetchCategorias();
         if (tipo === 'actualizar/eliminar') {
             setModoActualizarEliminar(true);
-            fetchBook(); // Obtener el libro existente para actualizar
+            fetchBook(); 
         } else {
             setModoActualizarEliminar(false);
         }
     }, []);
 
-    useEffect(() => {
-        setNuevoLibro(prevLibro => ({
-            ...prevLibro,
-            autoresId: autoresSeleccionados,
-            categoriasId: categoriasSeleccionadas
-        }));
-    }, [autoresSeleccionados, categoriasSeleccionadas]);
     
-    // Función para cargar los autores y categorías seleccionados del libro existente
-    const cargarAutoresYCategoriasSeleccionadas = (libro) => {
-        const autoresSeleccionadosLibro = libro.autores.map(autor => autor.idAutor);
-        const categoriasSeleccionadasLibro = libro.categorias.map(categoria => categoria.idCategoria);
-        setAutoresSeleccionados(autoresSeleccionadosLibro);
-        setCategoriasSeleccionadas(categoriasSeleccionadasLibro);
-    };
-    
-    // Función para manejar la obtención exitosa del libro existente
-    const handleFetchBookSuccess = (libro) => {
-        cargarAutoresYCategoriasSeleccionadas(libro);
-        setNuevoLibro({
-            titulo: libro.titulo,
-            sinopsis: libro.sinopsis,
-            imagen: libro.imagen,
-            añoPublicacion: libro.añoPublicacion,
-            isbn: libro.isbn,
-            numCopiasTotales: libro.numCopiasTotales,
-            numCopiasDisponibles: libro.numCopiasDisponibles,
-            numEstante: libro.ubicacion ? libro.ubicacion.numEstante : '',
-            numRepisa: libro.ubicacion ? libro.ubicacion.numRepisa : '',
-            autoresId: autoresSeleccionados,
-            categoriasId: categoriasSeleccionadas
-        });
-    };
-    
-    const fetchBook = async () => {
-        try {
-            setFetching(true);
-            const libro = await obtenerLibroPorId(idLibro);
-            handleFetchBookSuccess(libro);
-            setFetching(false);
-        } catch (e) {
-            setFetching(false);
-            Alert.alert(e.message);
-        }
-    };
-    
-
     const onFinishAnimation = () => {
         setActualizado(false)
         setGuardado(false)
@@ -191,25 +168,9 @@ function Book() {
         router.back()
     }
 
-    const toggleAutor = (autorId) => {
-        if (autoresSeleccionados.includes(autorId)) {
-          // Si el autor ya está seleccionado, quitarlo de la lista
-          setAutoresSeleccionados(autoresSeleccionados.filter((id) => id !== autorId));
-        } else {
-          // Si el autor no está seleccionado, agregarlo a la lista
-          setAutoresSeleccionados([...autoresSeleccionados, autorId]);
-        }
-      };
-    
-      const toggleCategoria = (categoriaId) => {
-        if (categoriasSeleccionadas.includes(categoriaId)) {
-          // Si la categoría ya está seleccionada, quitarla de la lista
-          setCategoriasSeleccionadas(categoriasSeleccionadas.filter((id) => id !== categoriaId));
-        } else {
-          // Si la categoría no está seleccionada, agregarla a la lista
-          setCategoriasSeleccionadas([...categoriasSeleccionadas, categoriaId]);
-        }
-      };
+    const setNuevoLibroAutoresId = (autoresSeleccionados) => {
+        setNuevoLibro({ ...nuevoLibro, autoresId: autoresSeleccionados });
+    };
 
     if(fetching){
         return(
@@ -270,6 +231,7 @@ function Book() {
                         multiline
                     />
                 </View>
+                <AuthorsMultipleSelector autoresId={nuevoLibro.autoresId} onUpdateAutoresId={setNuevoLibroAutoresId}/>
                 <View style={styles.formItem}>
                     <Text style={styles.formItemTitle}>Año de Publicación:</Text>
                     <TextInput
@@ -329,35 +291,7 @@ function Book() {
                         style={styles.formTextInput}
                     />
                 </View>
-                <View style={styles.formItem}>
-                    <Text style={styles.formItemTitle}>Autores:</Text>
-                    {autores.map((autor) => (
-                        <TouchableOpacity
-                        key={autor.idAutor}
-                        style={[styles.checkboxContainer, autoresSeleccionados.includes(autor.idAutor) && styles.checkedCheckboxContainer]}
-                        onPress={() => toggleAutor(autor.idAutor)}
-                        >
-                        <Text>{autor.nombreAutor}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-
-                <View style={styles.formItem}>
-                    <Text style={styles.formItemTitle}>Categorías:</Text>
-                    {categorias.map((categoria) => (
-                        <TouchableOpacity
-                        key={categoria.idCategoria}
-                        style={[styles.checkboxContainer, categoriasSeleccionadas.includes(categoria.idCategoria) && styles.checkedCheckboxContainer]}
-                        onPress={() => toggleCategoria(categoria.idCategoria)}
-                        >
-                        <Text>{categoria.nombreCategoria}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-              </KeyboardAwareScrollView>
-
-
-              
+              </KeyboardAwareScrollView>              
                 {/* BottomTab */}
                 <View style={{ flex: 1}}>
                 <View style={styles.containerBtn}>

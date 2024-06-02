@@ -3,6 +3,7 @@ import { EXPO_PUBLIC_API_URL } from '@env';
 
 
 const API_URL = `${EXPO_PUBLIC_API_URL}/prestamos`;
+console.log(EXPO_PUBLIC_API_URL)
 
 export const comprobarElegibilidad = async (cif, idLibro) => {
     const response = await axios.post(`${API_URL}/comprobarElegibilidad`, null, {
@@ -37,6 +38,20 @@ export const verificarPrestamo = async (cif, idLibro) => {
 export const obtenerPrestamosPorEstudiante = async (cif) => {
     const response = await axios.get(`${API_URL}/prestamosPorEstudiante`, { params: { cif } });
     return response.data;
+};
+export const obtenerPrestamosPorEstudiantePaginados = async (cif, page = 0, size = 5) => {
+    try{        
+        const response = await axios.get(`${API_URL}/prestamosPorEstudiantePaginados`, {
+             params: { 
+                cif: cif,
+                page: page,
+                size: size
+             } 
+            });
+        return response.data;
+    }catch(error){
+        Alert.alert('Error al obtener tus préstamos:', error);
+    }
 };
 
 export const renovarPrestamo = async (cif, idPrestamo) => {

@@ -1,77 +1,92 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, RefreshControl, StyleSheet, ActivityIndicator } from 'react-native';
-import { obtenerPrestamosPorEstudiante } from '../../../services/PrestamosService';
+import { View, Text, FlatList, RefreshControl, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { obtenerPrestamosPorEstudiantePaginados } from '../../../services/PrestamosService';
 import { useAuth } from '../../../providers/AuthProvider';
 import PrestamoItem from '../../../components/MisPrestamos/PrestamoItem';
 import { prestamo } from '../../../types';
 import Colors from '../../../constants/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { isUser } from '../../../utils/Functions';
 
 function PrestamosScreen() {
-  const [prestamos, setPrestamos] = useState<prestamo[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const { session } = useAuth();
+  const [prestamos, setPrestamos] = useState<prestamo[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [listEnded, setListEnded] = useState(false);
+  const [nextPage, setNextPage] = useState(0);
+  const pageSize = 5;
+  const { session } = useAuth();
 
-  const fetchPrestamos = async () => {
-    if (session && 'cif' in session) {
-      try {
-        const prestamosResponse = await obtenerPrestamosPorEstudiante(session.cif);
-        setPrestamos(prestamosResponse);
-      } catch (error) {
-        console.error("Error al obtener los préstamos:", error);
-      } finally {
-        setLoading(false);
-        setRefreshing(false); // Detener el indicador de refreshing
+  const fetchPrestamos = async (isRefreshing = false) => {
+    if (loading || !session || !isUser(session)) return;
+
+    setLoading(true);
+    try {
+      const pageToFetch = isRefreshing ? 0 : nextPage;
+      const response = await obtenerPrestamosPorEstudiantePaginados(session.cif, pageToFetch, pageSize);
+      if (response.content.length > 0) {
+        setPrestamos(prevPrestamos => isRefreshing ? response.content : [...prevPrestamos, ...response.content]);
+        setNextPage(pageToFetch + 1);
+      } else {
+        setListEnded(true);
       }
-    } else {
+    } catch (error: any) {
+      Alert.alert('Error al obtener tus préstamos:', error.message);
+    } finally {
       setLoading(false);
-      setRefreshing(false); // Detener el indicador de refreshing
+      if (isRefreshing) setRefreshing(false);
+      setInitialLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPrestamos();
+    if (session && isUser(session)) {
+      fetchPrestamos(true);
+    }
   }, [session]);
 
   const onRefresh = () => {
-    setRefreshing(true); // Iniciar el indicador de refreshing
-    fetchPrestamos(); // Volver a cargar los datos
+    setRefreshing(true);
+    setListEnded(false);
+    fetchPrestamos(true);
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Mis Préstamos</Text>
       {
-          loading ? (
-            <View style={[styles.flatList, { justifyContent: 'center', alignItems: 'center'}]}>
-              <ActivityIndicator/>
-            </View>
-          ) :
-          (
-            prestamos?.length ?? 0 > 0 ? (
-              <FlatList
+        initialLoading ? (
+          <View style={[styles.flatList, { justifyContent: 'center', alignItems: 'center' }]}>
+            <ActivityIndicator size="large" color={Colors.light.primary} />
+          </View>
+        ) : (
+          prestamos.length > 0 ? (
+            <FlatList
               data={prestamos}
-              renderItem={({ item, index }) => <PrestamoItem prestamo={item} />}
+              renderItem={({ item }) => <PrestamoItem prestamo={item} />}
               keyExtractor={(item, index) => index.toString()}
               style={styles.flatList}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.flatListContent}
-              refreshControl={ // Agregar el RefreshControl a la FlatList
+              refreshControl={
                 <RefreshControl
                   refreshing={refreshing}
                   onRefresh={onRefresh}
-                  colors={[Colors.light.primary]} // Color del indicador de refreshing en Android
-                  tintColor={Colors.light.primary} // Color del indicador de refreshing en iOS
+                  colors={[Colors.light.primary]}
+                  tintColor={Colors.light.primary}
                 />
               }
+              onEndReached={() => !listEnded && fetchPrestamos()}
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={() => loading && !refreshing && <ActivityIndicator size="small" color={Colors.light.primary} />}
             />
-              ):(
-                <View style={[styles.flatList, {justifyContent: 'center', alignItems: 'center'}]}>
-                  <Text style={{fontSize: 40, fontWeight: '700', color:Colors.light.gray}}>¡Aún no has prestado ningún libro🤡🤡!</Text>
-                </View>
-              )
+          ) : (
+            <View style={[styles.flatList, { justifyContent: 'center', alignItems: 'center' }]}>
+              <Text style={{ fontSize: 40, fontWeight: '700', color: Colors.light.gray }}>¡Aún no has prestado ningún libro🤡🤡!</Text>
+            </View>
           )
+        )
       }
     </SafeAreaView>
   );
