@@ -22,16 +22,13 @@ function BooksSection() {
       try{
         setLoading(true);
         const response = await obtenerLibrosPaginados(nextPage, pageSize);
-        if(response.content.length > 0) {
-          setLibros((prevLibros) => {
+        setLibros((prevLibros) => {
               return [...prevLibros, ...response.content]
-          });
-          setNextPage(nextPage + 1);
-          setLoading(false);
-        }else{
-          setListEnded(true)
-          setLoading(false)
-        }
+        });
+        setNextPage(nextPage + 1);
+        Alert.alert(response.last)
+        response.last && setListEnded(true)
+        setLoading(false);
       }catch(e : any){
         Alert.alert('Error al obtener el inventario de los libros', e.message)
         setLoading(false);

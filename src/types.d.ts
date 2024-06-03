@@ -81,6 +81,19 @@
     personalEntrega: bibliotecaria;
     personalRecepcion: bibliotecaria;
   }
+
+  export interface prestamoDTO {
+    idPrestamo: number;
+    fechaPrestamo: string; 
+    fechaDevolucion: string;
+    estado: string;
+    codigoRetiro: string;
+    numRenovaciones: number;
+    idLibro: number;
+    libroTitulo: string;
+    libroImagen: string;
+    cifEstudiante: string;
+  }
   
   export interface calificacion {
     idCalificacion: number;

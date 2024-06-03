@@ -3,13 +3,13 @@ import { View, Text, FlatList, RefreshControl, StyleSheet, ActivityIndicator, Al
 import { obtenerPrestamosPorEstudiantePaginados } from '../../../services/PrestamosService';
 import { useAuth } from '../../../providers/AuthProvider';
 import PrestamoItem from '../../../components/MisPrestamos/PrestamoItem';
-import { prestamo } from '../../../types';
+import { prestamoDTO } from '../../../types';
 import Colors from '../../../constants/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { isUser } from '../../../utils/Functions';
 
 function PrestamosScreen() {
-  const [prestamos, setPrestamos] = useState<prestamo[]>([]);
+  const [prestamos, setPrestamos] = useState<prestamoDTO[]>([]);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -25,12 +25,9 @@ function PrestamosScreen() {
     try {
       const pageToFetch = isRefreshing ? 0 : nextPage;
       const response = await obtenerPrestamosPorEstudiantePaginados(session.cif, pageToFetch, pageSize);
-      if (response.content.length > 0) {
         setPrestamos(prevPrestamos => isRefreshing ? response.content : [...prevPrestamos, ...response.content]);
         setNextPage(pageToFetch + 1);
-      } else {
-        setListEnded(true);
-      }
+        response.last && setListEnded(true);
     } catch (error: any) {
       Alert.alert('Error al obtener tus préstamos:', error.message);
     } finally {

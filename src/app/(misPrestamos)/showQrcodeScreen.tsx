@@ -9,7 +9,7 @@ import Colors from '../../constants/Colors';
 
 function ShowQrcodeScreen() {
     const { codigoRetiro } = useLocalSearchParams();
-
+ 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        // alignItems: 'center',
         backgroundColor: Colors.light.primary
     },
     header: {

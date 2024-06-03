@@ -86,6 +86,7 @@ function RootLayout() {
               />
               <Stack.Screen name="(auth)" />
               <Stack.Screen name="(misPrestamos)" options={{ presentation: 'fullScreenModal'}}/>
+              <Stack.Screen name="(prestamosGestion)" options={{ presentation: 'fullScreenModal'}}/>
           </Stack>
         </Animated.View>
       </GestureHandlerRootView>

@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Image } from 'expo-image';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import { prestamo } from '../../types';
+import { prestamoDTO } from '../../types';
 import Colors from '../../constants/Colors';
 import { formatearFecha, getColorPorEstado } from '../../utils/Functions';
 import { router } from 'expo-router';
 import { renovarPrestamo } from '../../services/PrestamosService';
 import { useAuth } from '../../providers/AuthProvider';
 
-function PrestamoItem( {prestamo }) {
+function PrestamoItem( {prestamo} : {prestamo : prestamoDTO} ) {
   const { session } = useAuth();
   const [renovando, setRenovando] = useState(false)
   
