@@ -18,20 +18,11 @@ function DrawerLayout() {
         drawerLabelStyle: { marginLeft: -20},
       }}
       >
-        <Drawer.Screen name='(tabs)' 
+        <Drawer.Screen name='homeScreen' 
           options={{ 
             title: 'Principal',
             drawerIcon: ({size, color}) => (
               <Ionicons name='home-outline' size={size} color={color}/>
-            )
-          }}
-        />
-        <Drawer.Screen name='settings' 
-          options={{ 
-            title: 'Configuración',
-            headerShown: true,
-            drawerIcon: ({size, color}) => (
-              <Ionicons name='settings-outline' size={size} color={color}/>
             )
           }}
         />

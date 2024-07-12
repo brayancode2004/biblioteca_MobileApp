@@ -5,7 +5,7 @@ import 'text-encoding-polyfill'; //
 let stompClient = null;
 
 export const connect = (codigoRetiro, onMessageReceived) => {
-  const socket = new SockJS('http://192.168.40.199:8181/api/prestamosqr');
+  const socket = new SockJS('http://localhost:8181/api/prestamosqr');
   stompClient = new Client({
     webSocketFactory: () => socket,
     onConnect: () => {
