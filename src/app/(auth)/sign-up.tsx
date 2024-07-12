@@ -10,6 +10,8 @@ import { useAuth } from '../../providers/AuthProvider';
 import { guardarUsuario } from '../../utils/Functions';
 import { AxiosError } from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import 'react-native-reanimated';
+
 
 function SignUpScreen() {
   const navigation = useNavigation()

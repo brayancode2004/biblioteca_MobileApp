@@ -8,6 +8,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import BooksSlider from "../../../components/Home/BooksSlider";
 import ToggleSwitch from "../../../components/Home/CategorySwitch";
 import { useAuth } from "../../../providers/AuthProvider";
+import 'react-native-reanimated';
+
 
 export default function HomeScreen() {
   const { setSession, session} = useAuth()

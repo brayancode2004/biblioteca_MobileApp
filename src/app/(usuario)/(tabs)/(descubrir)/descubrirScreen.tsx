@@ -6,6 +6,8 @@ import BooksCard from '../../../../components/Home/BooksCard';
 import Colors from '../../../../constants/Colors';
 import TopAutores from '../../../../components/Home/TopAutores';
 import SearchHeader from '../../../../components/CommonComponents/SearchHeader';
+import 'react-native-reanimated';
+
 
 
 function DescubrirScreen() {

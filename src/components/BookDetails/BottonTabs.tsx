@@ -7,6 +7,8 @@ import { book } from '../../types';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../providers/AuthProvider';
 import Colors from '../../constants/Colors';
+import 'react-native-reanimated';
+
 
 function BottonTabs({ idLibro, prestamo } : {idLibro : number, prestamo : boolean }) {
   const { session } = useAuth()
@@ -70,7 +72,7 @@ function BottonTabs({ idLibro, prestamo } : {idLibro : number, prestamo : boolea
                   !yaPrestado && (
                     <View style={styles.dateContainer}>
                       <Text style={styles.dateTitle}>Devolución:</Text>
-                      <Text style={styles.date}>25 FEBRERO 2024</Text>
+                      <Text style={styles.date}>17 JULIO 2024</Text>
                     </View>
                   )
                 }

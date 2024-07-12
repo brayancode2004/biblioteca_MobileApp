@@ -10,6 +10,8 @@ import PrestamoDetails from '../../components/BookDetails/BookPrestamoScreen/pre
 import { comprobarElegibilidad } from '../../services/PrestamosService';
 import { useAuth } from '../../providers/AuthProvider';
 import { Image } from 'expo-image';
+import 'react-native-reanimated';
+
 
 function BookPrestamoVerification() {
   const { session } = useAuth();
@@ -57,7 +59,7 @@ function BookPrestamoVerification() {
           <>
             {/* Book CoverSection */}
             <View style={styles.infoSectionContainer}>
-              <BookInfoSection book={libro} prestamo={true} calificacion={false}/>
+              <BookInfoSection book={libro} prestamo={true} calificacion={false} delivery={false}/>
             </View>
 
             {/* Description */}

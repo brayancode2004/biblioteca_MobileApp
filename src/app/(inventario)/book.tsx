@@ -13,6 +13,8 @@ import LottieView from 'lottie-react-native';
 import { obtenerTodosLosAutores } from '../../services/AutorService';
 import { obtenerTodasLasCategorias } from '../../services/CategoriaService';
 import AuthorsMultipleSelector from '../../components/Inventario/AuthorsMultipleSelector';
+import 'react-native-reanimated';
+
 
 function Book() {
     const { idLibro, tipo } = useLocalSearchParams();

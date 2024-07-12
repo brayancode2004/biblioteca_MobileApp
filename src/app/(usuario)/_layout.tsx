@@ -3,8 +3,11 @@ import { Drawer } from 'expo-router/drawer';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomDrawerContent from '../../components/CustomDrawerContent';
+import 'react-native-reanimated';
 
-function DrawerLayout() {
+
+
+function DrawerLayout() { 
   return (
     <GestureHandlerRootView style={{ flex: 1}}>
     <Drawer drawerContent={CustomDrawerContent} 

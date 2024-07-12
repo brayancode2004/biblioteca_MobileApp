@@ -4,6 +4,8 @@ import { acortarTexto, renderStarRating } from '../../utils/Functions';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { book } from '../../types';
+import 'react-native-reanimated';
+
 
 function BooksCard({ item, top }: { item: book, top: boolean }) {
   return (

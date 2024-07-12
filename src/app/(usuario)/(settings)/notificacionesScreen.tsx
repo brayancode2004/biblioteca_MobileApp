@@ -6,6 +6,8 @@ import { MaterialCommunityIcons, Ionicons, MaterialIcons} from '@expo/vector-ico
 import ConfiguracionesHeader from '../../../components/Configuraciones/ConfiguracionesHeader';
 import { useAuth } from '../../../providers/AuthProvider';
 import { actualizarInfoEstudiante, obtenerEstudiantePorId } from '../../../services/EstudianteService';
+import 'react-native-reanimated';
+
 
 function NotificacionesScreen() {
   const { session, setSession } = useAuth()

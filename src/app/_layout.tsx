@@ -10,11 +10,13 @@ import {
   Inter_400Regular,
 } from '@expo-google-fonts/inter';
 import Animated, { FadeIn } from "react-native-reanimated";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthProvider, {useAuth} from "../providers/AuthProvider";
 import { esCorreoValido, obtenerUsuario } from "../utils/Functions";
 import { obtenerEstudiantePorId } from "../services/EstudianteService";
 import { obtenerPersonalBibliotecarioPorCorreo } from "../services/PersonalBibliotecarioService";
+import 'react-native-reanimated';
+
+
 
 function RootLayout() {
   const { setSession } = useAuth(); // Obtén el contexto AuthContext
@@ -26,9 +28,6 @@ function RootLayout() {
     InterSemi: Inter_600SemiBold,
     InterBold: Inter_700Bold,
     InterBlack: Inter_900Black,
-
-    // Amatic: AmaticSC_400Regular,
-    // AmaticBold: AmaticSC_700Bold,
   });
 
   useEffect(() => {
@@ -78,8 +77,8 @@ function RootLayout() {
       <GestureHandlerRootView style={{ flex: 1}}>
         <Animated.View style={{ flex: 1}} entering={FadeIn}>
           <Stack screenOptions={{ headerShown: false}} >
-              <Stack.Screen name="(usuario)" options={{ headerShown: false}}/>
               <Stack.Screen name="(bibliotecario)" options={{ headerShown: false}}/>
+              <Stack.Screen name="(usuario)" options={{ headerShown: false}}/>
               <Stack.Screen 
                 name="(bookDetails)" 
                 options={{ headerShown: false}} 

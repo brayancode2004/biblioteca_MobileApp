@@ -5,6 +5,8 @@ import { obtenerLibrosPorCategorias } from '../../../services/LibrosService';
 import { renderStarRating } from '../../../utils/Functions';
 import { router } from 'expo-router';
 import { book } from '../../../types';
+import 'react-native-reanimated';
+
 
 function RelacionadosSections({ book } : { book: book }) {
   const [books, setBooks] = useState([]);

@@ -1,6 +1,8 @@
 import { DrawerToggleButton } from "@react-navigation/drawer";
 import { Tabs } from "expo-router";
 import {Ionicons, FontAwesome5} from '@expo/vector-icons';
+import 'react-native-reanimated';
+
 
 
 function TabsLayout () {

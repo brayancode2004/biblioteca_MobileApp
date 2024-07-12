@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '../../constants/Colors';
+import 'react-native-reanimated';
+
 
 function SearchBar({ query, setQuery}) {
   return (

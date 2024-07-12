@@ -4,6 +4,8 @@ import React from 'react'
 import { router } from 'expo-router';
 import Colors from '../../constants/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import 'react-native-reanimated';
+
 
 function ConfiguracionesHeader({ title } : { title: string} ) {
   return (

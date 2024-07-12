@@ -8,6 +8,8 @@ import { AntDesign } from '@expo/vector-icons';
 import Colors from '../../../constants/Colors';
 import { router } from 'expo-router';
 import { useAuth } from '../../../providers/AuthProvider';
+import 'react-native-reanimated';
+
 
 function CalificacionsSection({ book } : { book: book }) {
   const { session } = useAuth()

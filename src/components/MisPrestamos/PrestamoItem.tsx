@@ -8,6 +8,8 @@ import { formatearFecha, getColorPorEstado } from '../../utils/Functions';
 import { router } from 'expo-router';
 import { renovarPrestamo } from '../../services/PrestamosService';
 import { useAuth } from '../../providers/AuthProvider';
+import 'react-native-reanimated';
+
 
 function PrestamoItem( {prestamo} : {prestamo : prestamoDTO} ) {
   const { session } = useAuth();

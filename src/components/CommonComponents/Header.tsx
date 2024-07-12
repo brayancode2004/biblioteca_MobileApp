@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, AntDesign } from '@expo/vector-icons'
 import { router } from 'expo-router';
 import Colors from '../../constants/Colors';
+import 'react-native-reanimated';
+
 
 export default function Header({ title } : { title: string}) {
   return (        

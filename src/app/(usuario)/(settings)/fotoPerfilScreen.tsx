@@ -7,6 +7,8 @@ import { useAuth } from '../../../providers/AuthProvider';
 import { cambiarFotoPerfilEstudiante, obtenerEstudiantePorId } from '../../../services/EstudianteService';
 import { bibliotecaria, user } from '../../../types';
 import * as ImagePicker from 'expo-image-picker';
+import 'react-native-reanimated';
+
 
 function FotoPerfilScreen() {
   const { session, setSession } = useAuth();

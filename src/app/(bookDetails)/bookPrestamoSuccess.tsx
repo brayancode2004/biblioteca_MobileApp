@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { formatearFecha } from '../../utils/Functions';
 import LottieView from 'lottie-react-native';
+import 'react-native-reanimated';
+
 
 
 function BookPrestamoSuccess() {
@@ -27,6 +29,7 @@ const {error, libroTitulo, fechaDevolucion} = useLocalSearchParams()
                 autoPlay
                 style={{
                 width: '44%',
+                height: 400,
                 maxWidth: 400,
             }}
             source={require('../../../assets/lottie/check.json')}

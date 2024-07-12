@@ -7,6 +7,7 @@ import Colors from "../constants/Colors";
 import { Redirect, router } from "expo-router";
 import { eliminarDatosUsuario } from "../utils/Functions";
 import { useAuth } from "../providers/AuthProvider";
+import 'react-native-reanimated';
 
 
 function CustomDrawerContent(props: any) {
@@ -17,7 +18,7 @@ function CustomDrawerContent(props: any) {
   const onLogOut = () => {
     eliminarDatosUsuario();
     setSession(null)
-    router.push('/')
+    router.replace('/')
   }
   
   return (

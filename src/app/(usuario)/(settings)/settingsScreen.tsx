@@ -8,6 +8,8 @@ import Colors from '../../../constants/Colors';
 import { useAuth } from '../../../providers/AuthProvider';
 import { useEffect, useState } from 'react';
 import { obtenerEstudiantePorId } from '../../../services/EstudianteService';
+import 'react-native-reanimated';
+
 
 
 function Settings() {

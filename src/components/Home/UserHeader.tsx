@@ -5,6 +5,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import React from 'react'
 import { cortarStringEnPrimerEspacio } from '../../utils/Functions';
 import { useAuth } from '../../providers/AuthProvider';
+import 'react-native-reanimated';
+
 
 function Header() {
     const navigation = useNavigation();

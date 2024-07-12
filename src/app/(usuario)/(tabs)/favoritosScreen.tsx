@@ -6,6 +6,8 @@ import Colors from '../../../constants/Colors';
 import { Image } from 'expo-image';
 import { obtenerFavoritos } from '../../../services/EstudianteService';
 import FavoritosItem from '../../../components/Favoritos/favoritosItem';
+import 'react-native-reanimated';
+
 
 function FavoritosScreen() {
   const { session } = useAuth(); 

@@ -2,6 +2,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Colors from '../../../constants/Colors';
 import { book } from '../../../types';
+import 'react-native-reanimated';
+
 
 function PrestamoDetails({ book, fechaDevolucion }: { book : book, fechaDevolucion : string}) {
   return (

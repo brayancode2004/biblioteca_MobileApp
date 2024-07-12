@@ -3,6 +3,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { router } from 'expo-router';
+import 'react-native-reanimated';
+
 
 
 function SearchHeader({ tipo } : { tipo: string}) {

@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, ActivityIndicator, FlatList } from 'react-nativ
 import React, {useState, useEffect} from 'react';
 import { obtenerLibrosPorCategorias } from '../../services/LibrosService';
 import BooksCard from './BooksCard';
+import 'react-native-reanimated';
+
 
 function BooksSlider({category1, category2}: {category1: string, category2: string}) {
   const [books, setBooks] = useState([]);

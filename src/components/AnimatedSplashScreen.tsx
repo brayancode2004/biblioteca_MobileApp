@@ -2,6 +2,9 @@ import React, { useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
 import LottieView from 'lottie-react-native';
 import Animated, { ZoomOut } from 'react-native-reanimated';
+import 'react-native-reanimated';
+import Colors from '../constants/Colors';
+import { Image } from 'expo-image';
 
 const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
 
@@ -21,12 +24,13 @@ const AnimatedSplashScreen = ({
         loop={false}
         autoPlay
         style={{
-          width: '80%',
+          width: '60%',
+          height: 200,
           maxWidth: 400,
         }}
-        // Find more Lottie files at https://lottiefiles.com/featured
-        source={require('../../assets/lottie/netflix.json')}
+        source={require('../../assets/lottie/bookSplash.json')}
       />
+      <Animated.Image source={require('../../assets/splashTitle.png')} style={{width: 230, height: 80, marginTop: -20, marginLeft: 20}} exiting={ZoomOut}/>
     </Animated.View>
   );
 };
@@ -37,6 +41,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent:'center',
     alignItems: 'center',
-    backgroundColor: 'black'
+    backgroundColor: Colors.light.pureWhite
   }
 })

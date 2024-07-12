@@ -2,6 +2,8 @@ import React from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Image } from 'expo-image';
 import { autor } from '../../types';
+import 'react-native-reanimated';
+
 
 function AuthorHorizontalItem({ author } : { author: autor}) {
   return (

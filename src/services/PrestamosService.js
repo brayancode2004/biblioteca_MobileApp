@@ -72,15 +72,26 @@ export const obtenerPrestamoPorCodigoRetiro = async (codigoRetiro) => {
     return response.data;
 };
 
-export const entregarLibro = async (idPrestamo, idPersonalEntrega) => {
-    const response = await axios.put(`${API_URL}/entregar/${idPrestamo}?idPersonalEntrega=${idPersonalEntrega}`);
+export const entregarLibro = async (idPrestamo, idPersonalEntrega, socket) => {
+    const response = await axios.put(`${API_URL}/entregar/${idPrestamo}`, null, {
+        params: {
+            idPersonalEntrega: idPersonalEntrega,
+            socket: socket
+        }
+    });
     return response.data;
 };
 
-export const recibirLibro = async (idPrestamo, idPersonalRecepcion) => {
-    const response = await axios.put(`${API_URL}/recibir/${idPrestamo}?idPersonalRecepcion=${idPersonalRecepcion}`);
+export const recibirLibro = async (idPrestamo, idPersonalRecepcion, socket) => {
+    const response = await axios.put(`${API_URL}/recibir/${idPrestamo}`, null, {
+        params: {
+            idPersonalRecepcion: idPersonalRecepcion,
+            socket: socket
+        }
+    });
     return response.data;
 };
+
 
 
 export const obtenerTodosLosPrestamos = async () => {
@@ -98,3 +109,13 @@ export const obtenerTop10LibrosMasPrestados = async () => {
         throw error; // Puedes relanzar el error para que el componente que llama a esta función lo maneje
     }
 };
+
+export const escanearQr = async (codigoRetiro) => {
+    const response = await axios.post(`${API_URL}/escanearQr`, null, {
+      params: {
+        codigoRetiro: codigoRetiro,
+      }
+    });
+    return response.data;
+  };
+  

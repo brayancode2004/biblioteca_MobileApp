@@ -8,6 +8,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { actualizarInfoEstudiante, obtenerEstudiantePorId } from '../../../services/EstudianteService';
 import { bibliotecaria, user } from '../../../types';
 import LottieView from 'lottie-react-native';
+import 'react-native-reanimated';
+
 
 function InformacionPersonalScreen() {
     const { session, setSession } = useAuth();

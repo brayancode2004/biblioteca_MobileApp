@@ -6,6 +6,8 @@ import ConfiguracionesHeader from '../../../components/Configuraciones/Configura
 import { useAuth } from '../../../providers/AuthProvider';
 import { cambiarPasswordEstudiante } from '../../../services/EstudianteService';
 import LottieView from 'lottie-react-native';
+import 'react-native-reanimated';
+
 
 function SeguridadScreen() {
   const { session } = useAuth();

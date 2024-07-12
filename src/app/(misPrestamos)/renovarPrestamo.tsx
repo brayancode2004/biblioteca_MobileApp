@@ -6,6 +6,8 @@ import Colors from '../../constants/Colors';
 import LottieView from 'lottie-react-native';
 import { formatearFecha } from '../../utils/Functions';
 import { Image } from 'expo-image';
+import 'react-native-reanimated';
+
 
 
 function RenovarPrestamo({}) {
@@ -21,7 +23,8 @@ function RenovarPrestamo({}) {
                 loop={false}
                 autoPlay
                 style={{
-                width: '40%',
+                width: 400,
+                height: 400,
                 maxWidth: 400,
             }}
             source={require('../../../assets/lottie/renovar.json')}

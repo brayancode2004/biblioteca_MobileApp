@@ -6,6 +6,8 @@ import Colors from '../constants/Colors';
 import { useRootNavigationState, router, Redirect } from 'expo-router';
 import { useAuth } from '../providers/AuthProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import 'react-native-reanimated';
+
 
 function Index() {
   const { session } = useAuth();

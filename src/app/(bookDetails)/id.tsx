@@ -6,6 +6,8 @@ import BookInfoSection from '../../components/BookDetails/BookInfoSection';
 import BookMenuSection from '../../components/BookDetails/BookMenuSection/BookMenuSection';
 import BottonTabs from '../../components/BookDetails/BottonTabs';
 import { book } from '../../types';
+import 'react-native-reanimated';
+
 
 
 function BookDetails() {
@@ -36,7 +38,7 @@ function BookDetails() {
       <View style={styles.root}>
         {/* Book CoverSection */}
         <View style={styles.infoSectionContainer}>
-          <BookInfoSection book={libro} prestamo={false} calificacion={false}/>
+          <BookInfoSection book={libro} prestamo={false} calificacion={false} delivery={false}/>
         </View>
 
         {/* Description */}

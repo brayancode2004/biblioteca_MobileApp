@@ -2,6 +2,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import BooksSection from './BooksSection';
 import AuthorsSection from './AuthorsSection';
+import 'react-native-reanimated';
+
 
 function TopTabMenu() {
   const [selectedTab, setSelectedTab] = useState(1);

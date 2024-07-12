@@ -1,8 +1,11 @@
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
 import Colors from "../../../constants/Colors"
 import { useEffect, useState } from "react";
 import TopTabMenu from "../../../components/Inventario/TopTabMenu";
 import SearchHeader from "../../../components/CommonComponents/SearchHeader";
+import { SafeAreaView } from "react-native-safe-area-context";
+import 'react-native-reanimated';
+
 
 function InventarioScreen() {
 

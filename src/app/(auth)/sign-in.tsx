@@ -11,6 +11,8 @@ import { esCorreoValido, guardarUsuario } from '../../utils/Functions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../../providers/AuthProvider';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import 'react-native-reanimated';
+
 
 function SignInScreen() {
   const { setSession, session} = useAuth()
@@ -32,9 +34,9 @@ function SignInScreen() {
         const firstLaunch = await AsyncStorage.getItem('@firstLaunch')
         setLoading(false)
         if(firstLaunch === null){
-          router.push('(auth)/onboardingScreen')
+          router.replace('(auth)/onboardingScreen')
         }else {
-          router.push('(usuario)/homeScreen')
+          router.replace('(usuario)/homeScreen')
         }
       }catch(e: any){
         setLoading(false)
@@ -50,9 +52,9 @@ function SignInScreen() {
           const firstLaunch = await AsyncStorage.getItem('@firstLaunch')
           setLoading(false)
           if(firstLaunch === null){
-            router.push('(auth)/onboardingScreen')
+            router.replace('(auth)/onboardingScreen')
           }else {
-            router.push('(bibliotecario)/homeScreen')
+            router.replace('(bibliotecario)/homeScreen')
           }
         }catch(e: any){
           // Esto es lo que pasa si la contraseña es incorrecta

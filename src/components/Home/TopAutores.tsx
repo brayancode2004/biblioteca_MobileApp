@@ -3,6 +3,8 @@ import React from 'react';
 import authors from '../../utils/Data';
 import { acortarTexto } from '../../utils/Functions';
 import { Image } from 'expo-image';
+import 'react-native-reanimated';
+
 
 interface CarouselItem {
     id: number;

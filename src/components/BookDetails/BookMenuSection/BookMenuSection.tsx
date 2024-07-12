@@ -4,6 +4,8 @@ import AcercaSection from './AcercaSection';
 import CalificacionsSection from './CalificacionsSection';
 import RelacionadosSections from './RelacionadosSections';
 import { book } from '../../../types';
+import 'react-native-reanimated';
+
 
 function BookMenuSection({ book }: { book : book}) {
   const [selectedTab, setSelectedTab] = useState(0);

@@ -21,6 +21,8 @@ import Colors from '../../constants/Colors';
 import { Image } from 'expo-image';
 import { useAuth } from '../../providers/AuthProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import 'react-native-reanimated';
+
 
 const onboardingSteps = [
   {

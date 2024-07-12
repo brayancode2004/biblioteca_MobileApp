@@ -111,5 +111,3 @@ export const esFavorito = async (cifEstudiante, idLibro) => {
         throw error; // O maneja el error según tu lógica de la aplicación
     }
 };
-
-

@@ -5,6 +5,8 @@ import { obtenerAutoresPaginados } from '../../services/AutorService';
 import { autor } from '../../types';
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import Colors from '../../constants/Colors';
+import 'react-native-reanimated';
+
 
 function AuthorsMultipleSelector({ autoresId, onUpdateAutoresId }) {
     const [loading, setLoading] = useState(false);

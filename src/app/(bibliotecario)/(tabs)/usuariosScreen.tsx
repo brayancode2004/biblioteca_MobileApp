@@ -1,4 +1,6 @@
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import 'react-native-reanimated';
+
 
 function UsuariosScreen() {
   return (

@@ -4,6 +4,8 @@ import { Image } from 'expo-image';
 import { book } from '../../types';
 import { renderStarRating } from '../../utils/Functions';
 import { router } from 'expo-router';
+import 'react-native-reanimated';
+
 
 function BookHorizontalItem({ book } : { book: book }) {
   return (

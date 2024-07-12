@@ -2,6 +2,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Image } from 'expo-image';
 import { book } from '../../../types';
+import 'react-native-reanimated';
+
 
 function AcercaSection({ book } : { book: book }) {
 

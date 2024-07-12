@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -34,7 +34,8 @@
         {
           "photosPermission": "The app accesses your photos to let you use them as profile picture."
         }
-      ]
+      ],
+      "expo-font"
     ]
   }
 }

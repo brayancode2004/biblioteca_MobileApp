@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { Alert, Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
 import { CameraView, Camera, useCameraPermissions } from 'expo-camera';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { prestamoDTO } from '../../types';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import 'react-native-reanimated';
+import {  obtenerPrestamoPorCodigoRetiro } from '../../services/PrestamosService';
+
 
 const { width, height } = Dimensions.get('window');
 const qrSize = 300;
 
-function PrestamosEntrega() {
+function PrestamosQr() {
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
   const [mode, setMode] = useState('scan'); // 'scan' or 'enter'
@@ -23,28 +26,14 @@ function PrestamosEntrega() {
     }
   }, [permission]);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = async ({ type, data }: { type: any, data: any}) => {
     setScanned(true);
-    Alert.alert('Código QR Escaneado', `Código: ${data}`);
-    // Aquí debes consumir el servicio de búsqueda de préstamo con el código de retiro
-    // fetchLoanDetails(data);
+    router.replace({ params: { codigoretiro: data}, pathname: '(prestamosGestion)/prestamoEntregaInfo' })
   };
 
-  const fetchLoanDetails = async (codigoRetiro : string) => {
-    try {
-      const response = await fetch(`YOUR_API_ENDPOINT_HERE/${codigoRetiro}`);
-      const loanDetails = await response.json();
-      // Manejar los detalles del préstamo aquí
-      console.log(loanDetails);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleManualEntry = () => {
+  const handleManualEntry = async () => {
     if (codigoRetiro) {
-     Alert.alert('Código de Retiro Ingresado', `Código: ${codigoRetiro}`);
-    //   fetchLoanDetails(codigoRetiro);
+      router.replace({ params: { codigoretiro: codigoRetiro, manual: 'true' }, pathname: '(prestamosGestion)/prestamoEntregaInfo' })
     } else {
       Alert.alert('Error', 'Por favor, ingrese un código de retiro.');
     }
@@ -56,74 +45,75 @@ function PrestamosEntrega() {
 
   if (!permission.granted) {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={[styles.container, {justifyContent: 'center'}]}>
         <Text style={{ textAlign: 'center' }}>Necesitamos permiso para usar la cámara</Text>
-        <Button onPress={requestPermission} title="Conceder permiso" />
+        <Button onPress={() => requestPermission()} title="Conceder permiso" />
+      </SafeAreaView>
+    );
+  }
+
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
+          <Ionicons name='arrow-back-outline' size={24} color={Colors.light.primary} />
+        </TouchableOpacity>
+        {mode === 'scan' && (
+          <CameraView
+            onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+            barcodeScannerSettings={{
+              barcodeTypes: ["qr", "pdf417"],
+            }}
+            style={styles.camera}
+          >
+            <View style={styles.overlay}>
+              <View style={[styles.mask, styles.maskTop]} />
+              <View style={[styles.mask, styles.maskBottom]} />
+              <View style={[styles.mask, styles.maskLeft]} />
+              <View style={[styles.mask, styles.maskRight]} />
+              <Text style={styles.title}>Escanea el Código QR</Text>
+              <Text style={styles.subtitle}>Pídele al usuario que te lo muestre desde su dispositivo</Text>
+              <View style={styles.qrArea} />
+            </View>
+          </CameraView>
+        )}
+        {mode === 'enter' && (
+          <KeyboardAwareScrollView contentContainerStyle={styles.inputContainer}>
+            <Text style={styles.titleTwo}>Ingresa el código de Retiro</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Ingrese el código de retiro"
+              value={codigoRetiro}
+              onChangeText={setCodigoRetiro}
+            />
+            <TouchableOpacity onPress={handleManualEntry} style={styles.ingresarBtn}>
+              <Text style={styles.ingresarBtnText}>Entregar/Recibir</Text>
+            </TouchableOpacity>
+            {/* <Button title="Entregar/Recibir" onPress={handleManualEntry} color={Colors.light.secondary} /> */}
+          </KeyboardAwareScrollView>
+        )}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.modeButton, mode === 'scan' && styles.activeModeButton]}
+            onPress={() => {
+              setMode('scan');
+              setScanned(false); // Restablecer el estado de escaneo
+            }}
+          >
+            <Text style={styles.modeButtonText}>Escanear código</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.modeButton, mode === 'enter' && styles.activeModeButton]}
+            onPress={() => setMode('enter')}
+          >
+            <Text style={styles.modeButtonText}>Ingresar código</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-        <Ionicons name='arrow-back-outline' size={24} color={Colors.light.primary} />
-      </TouchableOpacity>
-      {mode === 'scan' && (
-        <CameraView
-          onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-          barcodeScannerSettings={{
-            barcodeTypes: ["qr", "pdf417"],
-          }}
-          style={styles.camera}
-        >
-          <View style={styles.overlay}>
-            <View style={[styles.mask, styles.maskTop]} />
-            <View style={[styles.mask, styles.maskBottom]} />
-            <View style={[styles.mask, styles.maskLeft]} />
-            <View style={[styles.mask, styles.maskRight]} />
-            <Text style={styles.title}>Escanea el Código QR</Text>
-            <Text style={styles.subtitle}>Pídele al usuario que te lo muestre desde su dispositivo</Text>
-            <View style={styles.qrArea} />
-          </View>
-        </CameraView>
-      )}
-      {mode === 'enter' && (
-        <KeyboardAwareScrollView contentContainerStyle={styles.inputContainer}>
-          <Text style={styles.titleTwo}>Ingresa el código de Retiro</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Ingrese el código de retiro"
-            value={codigoRetiro}
-            onChangeText={setCodigoRetiro}
-          />
-          <TouchableOpacity onPress={handleManualEntry} style={styles.ingresarBtn}>
-            <Text style={styles.ingresarBtnText}>Entregar/Recibir</Text>
-          </TouchableOpacity>
-          {/* <Button title="Entregar/Recibir" onPress={handleManualEntry} color={Colors.light.secondary} /> */}
-        </KeyboardAwareScrollView>
-      )}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.modeButton, mode === 'scan' && styles.activeModeButton]}
-          onPress={() => {
-            setMode('scan');
-            setScanned(false); // Restablecer el estado de escaneo
-          }}
-        >
-          <Text style={styles.modeButtonText}>Escanear código</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.modeButton, mode === 'enter' && styles.activeModeButton]}
-          onPress={() => setMode('enter')}
-        >
-          <Text style={styles.modeButtonText}>Ingresar código</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-}
 
-export default PrestamosEntrega;
+export default PrestamosQr;
 
 const styles = StyleSheet.create({
   container: {

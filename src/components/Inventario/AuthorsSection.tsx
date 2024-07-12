@@ -5,6 +5,8 @@ import { obtenerAutoresPaginados } from '../../services/AutorService';
 import Colors from '../../constants/Colors';
 import { Entypo } from '@expo/vector-icons';
 import AuthorHorizontalItem from './AuthorHorizontalItem';
+import 'react-native-reanimated';
+
 
 function AuthorsSection() {
     const [loading, setLoading] = useState(false);

@@ -7,6 +7,8 @@ import { prestamoDTO } from '../../../types';
 import Colors from '../../../constants/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { isUser } from '../../../utils/Functions';
+import 'react-native-reanimated';
+
 
 function PrestamosScreen() {
   const [prestamos, setPrestamos] = useState<prestamoDTO[]>([]);

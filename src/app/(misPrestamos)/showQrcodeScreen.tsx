@@ -1,14 +1,30 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native'
 import { useLocalSearchParams, router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import QRCode from 'react-native-qrcode-svg';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
+import 'react-native-reanimated';
+import { connect, disconnect } from '../../services/WebSocketService';
 
 
 function ShowQrcodeScreen() {
     const { codigoRetiro } = useLocalSearchParams();
+
+    useEffect(() => {
+      connect(codigoRetiro, (message: string) => {
+        if (message === 'aprobado') {
+          router.replace( { params: { message: 'Recibiendo', codigoRetiro: codigoRetiro}, pathname: '(misPrestamos)/estadoEntregaPrestamo'} );
+        } else if (message === 'en ejecución') {
+          router.replace({ params: { message: 'Devolviendo', codigoRetiro: codigoRetiro}, pathname: '(misPrestamos)/estadoEntregaPrestamo'} );
+        }
+      });
+  
+      return () => {
+        disconnect();
+      };
+    }, []);
  
   return (
     <SafeAreaView style={styles.container}>

@@ -1,4 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
+import 'react-native-reanimated';
+
 
 function Settings() {
   return (

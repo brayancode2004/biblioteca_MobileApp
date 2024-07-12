@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Image, StyleSheet, View, Dimensions, FlatList } from "react-native";
+import 'react-native-reanimated';
+
 
 interface CarouselItem {
   id: string;

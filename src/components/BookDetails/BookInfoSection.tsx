@@ -10,14 +10,16 @@ import { book } from '../../types';
 import Colors from '../../constants/Colors';
 import { esFavorito, marcarComoFavorito, quitarFavorito } from '../../services/EstudianteService';
 import { useAuth } from '../../providers/AuthProvider';
+import 'react-native-reanimated';
 
-function BookInfoSection({ book, prestamo, calificacion } : {book : book, prestamo : boolean, calificacion : boolean}) {
+
+function BookInfoSection({ book, prestamo, calificacion, delivery } : {book : book, prestamo : boolean, calificacion : boolean, delivery: boolean}) {
   const { session } = useAuth(); 
   const [favorite, setFavorite] = useState<boolean>();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if(!prestamo && !calificacion){
+    if(!prestamo && !calificacion && !delivery){
       const checkIsFavorite = async () => {
         const response = await esFavorito(session && 'cif' in session && session.cif, book.idLibro);
         setFavorite(response);
@@ -42,7 +44,7 @@ function BookInfoSection({ book, prestamo, calificacion } : {book : book, presta
   }
 
   const handleFavorites = async () => {
-    if (!prestamo && !calificacion) {
+    if (!prestamo && !calificacion && !delivery) {
       try {
         setLoading(true);
         if (favorite) {
@@ -78,20 +80,20 @@ function BookInfoSection({ book, prestamo, calificacion } : {book : book, presta
         {/* Header */}
         <SafeAreaView>
             <View style={styles.header}>
-            <TouchableOpacity onPress={backBtn} style={styles.backBtn}>
-                <Ionicons name='arrow-back-outline' size={24}/>
+            <TouchableOpacity onPress={!delivery ? backBtn : undefined } style={[styles.backBtn, , delivery && {backgroundColor: 'transparent', borderColor: 'transparent'}]}>
+                <Ionicons name='arrow-back-outline' size={24} color={delivery ? 'transparent' : 'black'}/>
             </TouchableOpacity>
 
             <View style={styles.headerTitle}>
-                <Text style={styles.titleText}>{prestamo ? 'Confirmar Préstamo' : calificacion ? 'Añade una Calificación' : 'Book Details'}</Text>
+                <Text style={styles.titleText}>{(prestamo ? 'Confirmar Préstamo' : (calificacion ? 'Añade una Calificación' : (delivery ? 'Préstamo Encontrado' : 'Book Details')))}</Text>
             </View>
             
             <TouchableOpacity 
-              style={[ styles.favoriteBtn, (prestamo || calificacion) && {backgroundColor: 'transparent', borderColor: 'transparent'}]}
+              style={[ styles.favoriteBtn, (prestamo || calificacion || delivery) && {backgroundColor: 'transparent', borderColor: 'transparent'}]}
               onPress={handleFavorites}
               disabled={loading}
               >
-                <AntDesign name={favorite ? 'heart' : 'hearto'} size={24} color={prestamo || calificacion ? 'transparent' : favorite ? 'red' : 'black'}/>
+                <AntDesign name={favorite ? 'heart' : 'hearto'} size={24} color={prestamo || calificacion || delivery ? 'transparent' : favorite ? 'red' : 'black'}/>
             </TouchableOpacity>
             </View>
         </SafeAreaView>

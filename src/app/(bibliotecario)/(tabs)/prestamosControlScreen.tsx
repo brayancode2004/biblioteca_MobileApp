@@ -4,13 +4,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../../../components/Descubrir/SearchBar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import 'react-native-reanimated';
+
 
 function PrestamosControlScreen() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}> 
         <SafeAreaView style={styles.container}>
           <Text>Control de Préstamos</Text>
-          <TouchableOpacity onPress={() => router.push('(prestamosGestion)/prestamosEntrega')} style={styles.backBtn}>
+          <TouchableOpacity onPress={() => router.push('(prestamosGestion)/prestamosQr')} style={styles.backBtn}>
             <MaterialCommunityIcons name="qrcode-scan" size={24} color="black" />
           </TouchableOpacity>
         </SafeAreaView>

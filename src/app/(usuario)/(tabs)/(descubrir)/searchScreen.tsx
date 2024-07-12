@@ -9,6 +9,8 @@ import { buscarLibros } from '../../../../services/LibrosService';
 import { renderStarRating } from '../../../../utils/Functions';
 import { book } from '../../../../types';
 import { ScrollView } from 'react-native-gesture-handler';
+import 'react-native-reanimated';
+
 
 function SearchScreen() {
   const [books, setBooks] = useState<book[]>([]);

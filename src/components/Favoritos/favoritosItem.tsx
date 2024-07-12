@@ -7,6 +7,8 @@ import { renderStarRating } from '../../utils/Functions';
 import Colors from '../../constants/Colors';
 import { quitarFavorito } from '../../services/EstudianteService';
 import { router } from 'expo-router';
+import 'react-native-reanimated';
+
 
 function FavoritosItem({ favorito, onUpdateFavoritos }: { favorito: favorito, onUpdateFavoritos: (idLibro: number) => void }) {
   const [favorite, setFavorite] = useState(true);

@@ -13,6 +13,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import { enviarCalificacion } from '../../services/CalificacionService';
 import LottieView from 'lottie-react-native';
+import 'react-native-reanimated';
+
 
 
 function BookCalificarScreen() {
@@ -99,6 +101,7 @@ function BookCalificarScreen() {
           autoPlay
           style={{
             width: '44%',
+            height: 400,
             maxWidth: 400,
           }}
           source={require('../../../assets/lottie/check.json')}
@@ -112,7 +115,7 @@ function BookCalificarScreen() {
       <View style={styles.root}>
         <KeyboardAwareScrollView contentContainerStyle={{ flex: 1}}>
           <View style={styles.infoSectionContainer}>
-              <BookInfoSection book={libro} prestamo={false} calificacion={true}/>
+              <BookInfoSection book={libro} prestamo={false} calificacion={true} delivery={false}/>
           </View>
 
           {/* Description */}

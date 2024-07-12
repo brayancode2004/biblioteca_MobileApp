@@ -6,6 +6,8 @@ import Colors from '../../constants/Colors';
 import { MaterialIcons } from '@expo/vector-icons';
 import BookHorizontalItem from '../CommonComponents/BookHorizontalItem';
 import { router } from 'expo-router';
+import 'react-native-reanimated';
+
 
 function BooksSection() {
   const [loading, setLoading] = useState(false);
@@ -26,7 +28,6 @@ function BooksSection() {
               return [...prevLibros, ...response.content]
         });
         setNextPage(nextPage + 1);
-        Alert.alert(response.last)
         response.last && setListEnded(true)
         setLoading(false);
       }catch(e : any){

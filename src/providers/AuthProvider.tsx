@@ -1,5 +1,6 @@
 import { useState, PropsWithChildren, createContext, useContext } from "react";
 import { user, bibliotecaria } from "../types";
+import 'react-native-reanimated';
 
 type AuthData = {
     session: user | bibliotecaria | null;
